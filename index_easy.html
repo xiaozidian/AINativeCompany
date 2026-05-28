@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Native 组织 × 指令驱动 Skill 进化</title>
+<style>
+  :root{
+    --bg:#fafaf7;
+    --bg-card:#ffffff;
+    --bg-soft:#f3f1ec;
+    --ink:#1a1a1a;
+    --ink-2:#3d3d3d;
+    --ink-3:#6b6b6b;
+    --ink-4:#9b9b9b;
+    --line:#e6e3dc;
+    --line-2:#d8d4ca;
+    --accent:#ff5b1f;
+    --accent-soft:#fff0e8;
+    --green:#1f7a4d;
+    --green-soft:#e6f4ec;
+    --blue:#1f4ea0;
+    --blue-soft:#e8eef9;
+    --yellow:#b78103;
+    --yellow-soft:#fcf3d7;
+    --shadow:0 1px 2px rgba(20,20,20,.04),0 8px 24px rgba(20,20,20,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:16px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code,pre{font-family:"SF Mono","Menlo","Consolas",monospace;font-size:13px}
+
+  /* nav */
+  nav.top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,250,247,.85);backdrop-filter:saturate(160%) blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.top .inner{
+    max-width:1180px;margin:0 auto;padding:14px 32px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  nav.top .brand{font-weight:600;letter-spacing:.5px;font-size:15px}
+  nav.top .brand .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;vertical-align:middle}
+  nav.top .links{display:flex;gap:28px;font-size:14px;color:var(--ink-3)}
+  nav.top .links a{color:var(--ink-3)}
+  nav.top .links a:hover{color:var(--ink);text-decoration:none}
+
+  /* sections shared */
+  section{padding:120px 32px;border-bottom:1px solid var(--line)}
+  section .wrap{max-width:1180px;margin:0 auto}
+  .eyebrow{
+    display:inline-block;font-size:12px;letter-spacing:2px;color:var(--accent);
+    text-transform:uppercase;font-weight:600;
+    padding:4px 10px;border:1px solid var(--accent);border-radius:99px;background:var(--accent-soft);
+  }
+  h1,h2,h3{margin:0;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+  h1{font-size:clamp(36px,5vw,64px);line-height:1.15;margin:24px 0 24px}
+  h2{font-size:clamp(28px,3.6vw,44px);line-height:1.2;margin:18px 0 16px}
+  h3{font-size:20px;line-height:1.4}
+  p{color:var(--ink-2);margin:0 0 14px}
+  .lede{font-size:20px;line-height:1.65;color:var(--ink-2);max-width:780px}
+  .muted{color:var(--ink-3)}
+  .small{font-size:13px;color:var(--ink-3)}
+  hr{border:none;border-top:1px dashed var(--line-2);margin:48px 0}
+
+  /* HERO */
+  #hero{padding:140px 32px 120px}
+  #hero .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+  #hero h1 strong{color:var(--accent);font-weight:700}
+  #hero .tagline{font-size:14px;letter-spacing:1px;color:var(--ink-3);margin-bottom:8px;font-weight:600}
+  #hero .actions{margin-top:36px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  #hero .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:8px;font-weight:600;font-size:14px;
+    background:var(--ink);color:#fff;border:1px solid var(--ink);
+  }
+  #hero .btn:hover{text-decoration:none;background:#000}
+  #hero .btn-secondary{background:transparent;color:var(--ink);}
+  #hero .btn-secondary:hover{background:var(--bg-soft)}
+
+  /* loop animated diagram */
+  .diagram{
+    position:relative;width:100%;aspect-ratio:1/1;max-width:520px;justify-self:end;
+    background:radial-gradient(circle at center,var(--bg-card) 0%,var(--bg) 80%);
+    border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .diagram svg{position:absolute;inset:0;width:100%;height:100%}
+  .diagram .center-label{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    text-align:center;font-size:13px;color:var(--ink-3);font-weight:600;letter-spacing:.5px;
+    pointer-events:none;
+  }
+  .diagram .center-label .big{font-size:18px;color:var(--ink);margin-bottom:4px;display:block;font-weight:700}
+  .node{
+    position:absolute;
+    background:var(--bg-card);border:1.5px solid var(--line-2);
+    padding:8px 14px;border-radius:99px;
+    font-size:13px;font-weight:600;color:var(--ink-2);
+    box-shadow:var(--shadow);
+    transition:all .35s ease;
+    white-space:nowrap;
+  }
+  .node.active{
+    background:var(--accent);color:#fff;border-color:var(--accent);
+    transform:translate(-50%,-50%) scale(1.08);
+  }
+  .node:not(.active){transform:translate(-50%,-50%)}
+  .node[data-i="1"]{top:8%;left:50%}
+  .node[data-i="2"]{top:30%;left:90%}
+  .node[data-i="3"]{top:74%;left:84%}
+  .node[data-i="4"]{top:92%;left:50%}
+  .node[data-i="5"]{top:74%;left:16%}
+  .node[data-i="6"]{top:30%;left:10%}
+
+  /* hero meta */
+  .meta-row{display:flex;gap:36px;margin-top:48px;color:var(--ink-3);font-size:13px;flex-wrap:wrap}
+  .meta-row b{color:var(--ink);font-weight:600}
+
+  /* LOOP cards */
+  #loop .head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:48px}
+  .grid-5{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;
+    padding:28px;transition:all .25s ease;cursor:default;
+    position:relative;overflow:hidden;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--ink-3);
+    transition:background .25s ease;
+  }
+  .card:hover{border-color:var(--ink-3);box-shadow:var(--shadow);transform:translateY(-2px)}
+  .card[data-tone="sensor"]::before{background:#1f4ea0}
+  .card[data-tone="policy"]::before{background:#1f7a4d}
+  .card[data-tone="tool"]::before{background:#b78103}
+  .card[data-tone="gate"]::before{background:#aa3322}
+  .card[data-tone="learn"]::before{background:#ff5b1f}
+  .card[data-tone="ctx"]::before{background:#5b3aa0}
+  .card .num{font-size:12px;letter-spacing:2px;color:var(--ink-3);font-weight:600;text-transform:uppercase}
+  .card h3{margin:8px 0 4px;font-size:22px}
+  .card .en{color:var(--ink-3);font-size:13px;letter-spacing:.5px;margin-bottom:14px}
+  .card .desc{color:var(--ink-2);font-size:14px;line-height:1.6}
+  .card blockquote{
+    margin:14px 0 0;padding:10px 14px;background:var(--bg-soft);
+    border-left:2px solid var(--line-2);font-size:13px;color:var(--ink-3);font-style:italic;
+    border-radius:0 4px 4px 0;
+  }
+  .card .spacex-box{
+    margin-top:16px;padding:14px;background:var(--accent-soft);border:1px dashed var(--accent);
+    border-radius:8px;font-size:13px;color:var(--ink-2);line-height:1.6;
+    max-height:0;opacity:0;overflow:hidden;
+    transition:max-height .35s ease,opacity .25s ease,padding .35s ease;
+    padding-top:0;padding-bottom:0;
+  }
+  .card:hover .spacex-box{max-height:280px;opacity:1;padding:14px}
+  .card .spacex-label{
+    display:block;font-size:11px;letter-spacing:1px;color:var(--accent);
+    font-weight:700;text-transform:uppercase;margin-bottom:6px;
+  }
+  .card.full{grid-column:span 3}
+  .card.full .desc{max-width:760px}
+  .card.full[data-tone="ctx"]{background:linear-gradient(180deg,var(--bg-card) 0%,var(--bg-soft) 100%)}
+
+  /* EVO */
+  #evo .pipeline{
+    display:grid;grid-template-columns:1fr 56px 1fr 56px 1fr;
+    gap:0;align-items:stretch;margin-top:40px;
+  }
+  .panel{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:24px;
+    box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+  }
+  .panel h4{margin:0 0 12px;font-size:13px;letter-spacing:1.5px;color:var(--ink-3);text-transform:uppercase;font-weight:700}
+  .panel .panel-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:18px}
+  .arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:22px;font-weight:700}
+  .arrow::after{content:"→"}
+
+  /* instruction row */
+  .ins-row{
+    background:var(--bg-soft);border-radius:8px;padding:14px;font-size:12.5px;line-height:1.55;
+  }
+  .ins-row .field{display:grid;grid-template-columns:128px 1fr;gap:10px;padding:4px 0;border-bottom:1px dashed var(--line-2)}
+  .ins-row .field:last-child{border-bottom:none}
+  .ins-row .field .k{color:var(--ink-3);font-weight:600;font-family:"SF Mono",monospace;font-size:11.5px}
+  .ins-row .field .v{color:var(--ink-2);word-break:break-all}
+  .ins-row .field .v.original{color:var(--accent);font-weight:600;background:var(--accent-soft);padding:2px 6px;border-radius:4px}
+  .panel .note{margin-top:12px;font-size:12px;color:var(--ink-3);line-height:1.55}
+
+  /* reflection center */
+  .reflect-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+  .reflect-item{
+    display:flex;justify-content:space-between;gap:8px;align-items:center;
+    background:var(--bg-soft);border-radius:6px;padding:8px 10px;font-size:12px;
+  }
+  .reflect-item .id{font-family:"SF Mono",monospace;color:var(--ink-3);min-width:32px;font-size:11px}
+  .reflect-item .ins-text{flex:1;color:var(--ink-2)}
+  .reflect-item .sec{color:var(--ink-4);font-size:11px;white-space:nowrap}
+  .reflect-arrow{
+    text-align:center;color:var(--accent);font-size:14px;letter-spacing:2px;margin:6px 0;font-weight:700;
+  }
+  .reflect-out{
+    background:var(--accent-soft);border:1px dashed var(--accent);border-radius:8px;padding:12px;
+    font-size:12.5px;color:var(--ink);line-height:1.6;
+  }
+  .reflect-out b{color:var(--accent)}
+
+  /* skill diff */
+  .diff{
+    background:var(--bg-soft);border-radius:8px;padding:16px;font-family:"SF Mono",monospace;
+    font-size:12.5px;line-height:1.7;color:var(--ink-2);overflow-x:auto;
+  }
+  .diff .line-add{background:var(--green-soft);color:var(--green);display:block;margin:0 -16px;padding:2px 16px;border-left:3px solid var(--green)}
+  .diff .line-keep{display:block;margin:0 -16px;padding:2px 16px;border-left:3px solid transparent}
+  .diff .ver{font-weight:700;color:var(--ink);font-family:inherit;font-size:13px;margin-bottom:8px;display:block}
+  .ver-tag{
+    display:inline-block;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700;
+    font-family:inherit;letter-spacing:.5px;
+  }
+  .ver-tag.v3{background:var(--bg-soft);color:var(--ink-3);border:1px solid var(--line-2)}
+  .ver-tag.v4{background:var(--green-soft);color:var(--green);border:1px solid var(--green)}
+
+  /* tabs */
+  .tabs{margin-top:60px;background:var(--bg-card);border:1px solid var(--line);border-radius:12px;padding:32px;box-shadow:var(--shadow)}
+  .tabs h3{margin:0 0 18px}
+  .tab-bar{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .tab-btn{
+    background:transparent;border:none;padding:12px 20px;cursor:pointer;
+    font-size:14px;font-weight:600;color:var(--ink-3);
+    border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;
+  }
+  .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .tab-btn .ver-tag{margin-left:6px}
+  .tab-pane{display:none}
+  .tab-pane.active{display:block}
+  .tab-pane h4{margin:0 0 14px;font-size:15px;color:var(--ink-3);letter-spacing:.5px}
+  .out-block{
+    background:var(--bg-soft);border-radius:8px;padding:20px;font-size:14px;line-height:1.7;color:var(--ink-2);
+    white-space:pre-wrap;
+  }
+  .out-block .h{color:var(--ink);font-weight:700;display:block;margin:12px 0 4px}
+  .out-block .h:first-child{margin-top:0}
+  .out-block table{width:100%;border-collapse:collapse;font-size:12.5px;margin:8px 0}
+  .out-block th,.out-block td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+  .out-block th{background:var(--bg-card);color:var(--ink);font-weight:700}
+  .v3-out{border-left:3px solid var(--ink-4)}
+  .v4-out{border-left:3px solid var(--green)}
+
+  /* CTA */
+  #cta{padding:140px 32px;text-align:center;border-bottom:none;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-soft) 100%)}
+  #cta h2{font-size:clamp(32px,4vw,52px);max-width:900px;margin:18px auto 24px}
+  #cta .lede{margin:0 auto;color:var(--ink-3);font-size:18px}
+  #cta .ask{margin-top:48px;font-size:24px;color:var(--ink);font-weight:700;letter-spacing:.5px}
+  #cta .ask span{color:var(--accent)}
+
+  footer{padding:32px;text-align:center;color:var(--ink-4);font-size:12px;background:var(--bg-soft)}
+  footer a{color:var(--ink-3)}
+
+  /* references */
+  .ref{background:var(--bg-soft);padding:14px 18px;border-radius:8px;font-size:12.5px;color:var(--ink-3);margin-top:24px}
+  .ref b{color:var(--ink-2)}
+
+  @media (max-width:960px){
+    section{padding:80px 24px}
+    #hero{padding:80px 24px}
+    #hero .wrap{grid-template-columns:1fr;gap:40px}
+    .diagram{justify-self:center;max-width:420px}
+    .grid-5{grid-template-columns:1fr}
+    .card.full{grid-column:span 1}
+    #evo .pipeline{grid-template-columns:1fr;gap:12px}
+    .arrow{transform:rotate(90deg);height:32px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <div class="brand"><span class="dot"></span>AI Native × Skill 进化引擎</div>
+    <div class="links">
+      <a href="#loop">五层循环</a>
+      <a href="#evo">进化引擎</a>
+      <a href="#cta">下一步</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="wrap">
+    <div>
+      <div class="tagline">A FRAMEWORK FOR AI NATIVE TEAMS</div>
+      <h1>把判断<strong>说出来</strong>，<br>让 skill 永远<strong>记住</strong>。</h1>
+      <p class="lede">
+        公司不是组织架构图，而是一组递归的、自我改进的循环。
+        分析师那一句"该这样改"，不该消失在对话里 ——
+        它就是最高质量的训练信号，要被无损接住、定期蒸馏，写进未来所有同类任务的判断。
+      </p>
+      <div class="actions">
+        <a class="btn" href="#loop">看 Bttr 五层循环 ↓</a>
+        <a class="btn btn-secondary" href="#evo">看进化引擎四步 →</a>
+      </div>
+      <div class="meta-row">
+        <div><b>循环视角</b><br>Bttr · Burn Tokens, Not Headcount</div>
+        <div><b>引擎实现</b><br>SQLite + Claude · 一周可跑通</div>
+        <div><b>贯穿案例</b><br>SpaceX S-1 · 2026-05-20</div>
+      </div>
+    </div>
+
+    <div class="diagram" aria-label="Five-layer loop diagram">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+          <radialGradient id="g1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff0e8" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#fff0e8" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="32" fill="url(#g1)"/>
+        <circle cx="50" cy="50" r="32" fill="none" stroke="#e6e3dc" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>
+        <circle cx="50" cy="50" r="20" fill="none" stroke="#e6e3dc" stroke-width="0.3"/>
+        <!-- Connecting lines from center -->
+        <g stroke="#d8d4ca" stroke-width="0.3">
+          <line x1="50" y1="50" x2="50" y2="8"/>
+          <line x1="50" y1="50" x2="90" y2="30"/>
+          <line x1="50" y1="50" x2="84" y2="74"/>
+          <line x1="50" y1="50" x2="50" y2="92"/>
+          <line x1="50" y1="50" x2="16" y2="74"/>
+          <line x1="50" y1="50" x2="10" y2="30"/>
+        </g>
+      </svg>
+      <div class="center-label">
+        <span class="big">Company Context</span>
+        legibility is the unlock
+      </div>
+      <div class="node" data-i="1">① Sensor</div>
+      <div class="node" data-i="2">② Policy</div>
+      <div class="node" data-i="3">③ Tool</div>
+      <div class="node" data-i="4">④ Quality Gate</div>
+      <div class="node" data-i="5">⑤ Learning</div>
+      <div class="node" data-i="6">⑥ Context</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOOP ============ -->
+<section id="loop">
+  <div class="wrap">
+    <div class="head">
+      <div>
+        <span class="eyebrow">PART 01</span>
+        <h2>五层循环 · 一颗大脑在中间，人坐在边缘</h2>
+        <p class="lede small" style="font-size:16px;color:var(--ink-3);max-width:760px;margin-top:14px">
+          Bttr 在 <i>Burn Tokens, Not Headcount</i> 中提出：传统层级是低带宽时代的应对机制。
+          AI Native 的公司被重新定义成「五层循环 + 一个公司语境中心」 —— hover 任意卡片，看它在 SpaceX 案例里如何工作。
+        </p>
+      </div>
+    </div>
+
+    <div class="grid-5">
+      <article class="card" data-tone="sensor">
+        <div class="num">LAYER 01</div>
+        <h3>Sensor 感知层</h3>
+        <div class="en">The loop only knows what it can sense.</div>
+        <div class="desc">
+          系统的输入感官 —— 客户邮件、工单、代码 commit、产品遥测、内部对话。决定循环的视野边界。
+          一件没有被传感器接住的事，对系统来说就是没有发生过。
+        </div>
+        <blockquote>"循环只知道它能感知到的事物。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          分析师对 agent 说出的「承付义务太浅，拆出期限分布」这一句话，被 <code>log_instruction()</code> 接住，写进 <code>instructions</code> 表 —— 没有它，这句话飘走，循环对这次修正一无所知。
+        </div>
+      </article>
+
+      <article class="card" data-tone="policy">
+        <div class="num">LAYER 02</div>
+        <h3>Policy 策略层</h3>
+        <div class="en">Rules about what the system can do without asking.</div>
+        <div class="desc">
+          自治与监督的护栏。哪些动作系统可以自己拍板，哪些必须升级到人。
+          这是一道挂在循环外侧的硬约束，不是 prompt 里的软约束。
+        </div>
+        <blockquote>"自治与监督的边界设在这里，不在 prompt 里。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          agent 自己可以重组段落、加交叉引用，但任何"对 SpaceX 估值的最终判断"必须由分析师给出；skill 改写必须经反思器 + 留出集 + 人工确认，不许 agent 偷偷改。
+        </div>
+      </article>
+
+      <article class="card" data-tone="tool">
+        <div class="num">LAYER 03</div>
+        <h3>Tool 工具层</h3>
+        <div class="en">Deterministic APIs. Boring infrastructure.</div>
+        <div class="desc">
+          循环里所有"动手做事"的能力，被暴露成一组确定性 API。
+          决策面靠模型推理，工具面靠死板可靠。模型再不聪明，也只能调既定 API 做既定事。
+        </div>
+        <blockquote>"无聊但可靠的基础设施。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          <code>log_instruction()</code>、SQLite 写入、反思器 prompt 调用、留出集 LLM-judge 打分 —— 都是确定性 API。agent 不靠魔法做事，只在选用哪个工具上动脑子。
+        </div>
+      </article>
+
+      <article class="card" data-tone="gate">
+        <div class="num">LAYER 04</div>
+        <h3>Quality Gate 质量闸门</h3>
+        <div class="en">Safety filters + human review for high-stakes actions.</div>
+        <div class="desc">
+          所有从循环里推出去的产出，进入世界前要过的闸门。安全过滤器（自动）+ 高风险动作人工审核。
+          闸门让"自治"变得可负担。
+        </div>
+        <blockquote>"高风险动作，人在闭环。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          skill v4 候选要在留出集（3 篇黄金终稿）上跑完 LLM-judge 打分，得分 0.85 ≥ 基线 0.78 才能进入待上线，最后由分析师一键确认 —— 没有这道闸，自我改写就是危险动作。
+        </div>
+      </article>
+
+      <article class="card" data-tone="learn">
+        <div class="num">LAYER 05</div>
+        <h3>Learning 学习机制</h3>
+        <div class="en">By morning it knows more than last night.</div>
+        <div class="desc">
+          循环的自检 + 自改 + 自部署能力。失败 → 诊断 → 补丁 → 上线，在循环本身的运转中自然发生。
+          多数公司缺的就是这一层。
+        </div>
+        <blockquote>"循环跑过夜，第二天早晨整个 codebase 更聪明。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          反思器每周读完 6 条 instructions（id 12/15/19/23/24/27），归纳出一条新规则「大额数字必拆结构」，自动产出 patch 候选 —— Bttr 那段"系统看着自己在哪里失败、写出补丁"在投研场景的具体形态。
+        </div>
+      </article>
+
+      <article class="card full" data-tone="ctx">
+        <div class="num">CENTER · COMPANY CONTEXT</div>
+        <h3>公司语境 · 大脑在中间</h3>
+        <div class="en">If it was not recorded, it did not happen to the intelligence.</div>
+        <div class="desc">
+          环绕在五层中央的"公司大脑" —— 历史、决策、客户、流程、教训、品味。所有让公司之所以成为这家公司的隐性知识，要被显式地、可读地存在一处，让循环里每个 agent 都能读到。
+          没说出来的，对系统就是不存在的。
+        </div>
+        <blockquote>"公司是中间一颗大脑，人坐在边缘。"</blockquote>
+        <div class="spacex-box">
+          <span class="spacex-label">在 SpaceX 案例里</span>
+          <code>instructions</code> 表（一手 why）+ <code>skill_versions</code> 表（可回滚的判断历史）+ skill 文件本身。分析师说过的所有判断，永久可读、可追溯、可复用 —— 这就是把一个调研员蒸馏成"永远在岗的智能体"的底层载体。
+        </div>
+      </article>
+    </div>
+
+    <div class="ref">
+      <b>出处：</b>本节所有引文与五层结构来自 Bttr 团队公开文章 <i>Burn Tokens, Not Headcount</i>。
+      原文 → <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">https://www.makebttr.com/insights/burn-tokens-not-headcount</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVO ============ -->
+<section id="evo">
+  <div class="wrap">
+    <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:24px">
+      <div>
+        <span class="eyebrow">PART 02</span>
+        <h2>指令驱动 Skill 进化引擎</h2>
+        <p class="lede small" style="font-size:16px;color:var(--ink-3);max-width:760px;margin-top:14px">
+          MVP 设计塌缩到只剩一种修正通道：人用自然语言指令让 agent 改。指令本身就是最高质量、无损的训练信号 —— 哪里不对、该怎么改、为什么，全在一句话里。
+          下面是一次完整循环：从分析师的一句话，到 SpaceX skill v3 → v4 的真实蒸馏。
+        </p>
+      </div>
+    </div>
+
+    <!-- pipeline: instruction row -> reflector -> skill diff -->
+    <div class="pipeline">
+
+      <!-- 1. instruction row -->
+      <div class="panel">
+        <h4>① INSTRUCTIONS 表</h4>
+        <div class="panel-title">分析师的一句话<br>被无损接住</div>
+        <div class="ins-row">
+          <div class="field"><span class="k">id</span><span class="v">23</span></div>
+          <div class="field"><span class="k">ts</span><span class="v">2026-05-21 15:42:08</span></div>
+          <div class="field"><span class="k">task_type</span><span class="v">prospectus_research</span></div>
+          <div class="field"><span class="k">skill_version</span><span class="v">v3</span></div>
+          <div class="field"><span class="k">target_section</span><span class="v">承付义务分析</span></div>
+          <div class="field"><span class="k">instruction</span><span class="v original">承付义务这段太浅，拆出期限分布，重点说近两年占比和它对现金流的含义。</span></div>
+          <div class="field"><span class="k">issue_category</span><span class="v">null（反思器后补）</span></div>
+          <div class="field"><span class="k">promoted_to_skill</span><span class="v">false</span></div>
+        </div>
+        <div class="note">
+          <b>这一栏 instruction 是一手 why</b> —— 不需要 agent 反推「分析师为什么改」，整个归因环节被砍掉。
+        </div>
+      </div>
+
+      <div class="arrow"></div>
+
+      <!-- 2. reflector -->
+      <div class="panel">
+        <h4>② 反思器（每周触发）</h4>
+        <div class="panel-title">读同类指令<br>归纳重复模式</div>
+        <div class="reflect-list">
+          <div class="reflect-item"><span class="id">#12</span><span class="ins-text">研发费总额没用，按业务线拆…</span><span class="sec">研发费</span></div>
+          <div class="reflect-item"><span class="id">#15</span><span class="ins-text">CapEx 别只给一个数，按 Starlink/Starship 拆…</span><span class="sec">CapEx</span></div>
+          <div class="reflect-item"><span class="id">#19</span><span class="ins-text">AI 分部收入要拆广告/订阅/数据授权…</span><span class="sec">收入</span></div>
+          <div class="reflect-item"><span class="id">#23</span><span class="ins-text">承付义务太浅，拆期限分布…</span><span class="sec">承付义务</span></div>
+          <div class="reflect-item"><span class="id">#24</span><span class="ins-text">云算力多年容量承诺别漏…</span><span class="sec">承付义务</span></div>
+          <div class="reflect-item"><span class="id">#27</span><span class="ins-text">291 亿债务必须拆出到期年份分布…</span><span class="sec">长期债务</span></div>
+        </div>
+        <div class="reflect-arrow">▼  归纳  ▼</div>
+        <div class="reflect-out">
+          <b>模式识别：</b>6 条不同 section 指令，底层共同模式 —— "总额无意义，结构才有意义"。归类 <code>depth_insufficient</code>。≥2 次反复 → 进入 skill v4 候选。
+        </div>
+      </div>
+
+      <div class="arrow"></div>
+
+      <!-- 3. skill diff -->
+      <div class="panel">
+        <h4>③ SKILL DIFF</h4>
+        <div class="panel-title">v3 → v4<br>蒸馏成永久判断</div>
+        <div class="diff">
+          <span class="ver">prospectus_skill · 拷问清单</span>
+          <span class="line-keep">  6. 现金流和净利润背离时，必须给出解释</span>
+          <span class="line-add">+ 7.【新增】大额数字必拆结构。任何单一总额</span>
+          <span class="line-add">+    （承付义务、研发费、CapEx、收入、长期</span>
+          <span class="line-add">+    债务）出现时，必须追问其构成与期限分布：</span>
+          <span class="line-add">+    近 1-2 年占比、按分部/用途/币种拆分。</span>
+          <span class="line-add">+    总额掩盖节奏，结构揭示压力。</span>
+          <span class="line-add">+    —— 沉淀自 6 条分析师指令</span>
+          <span class="line-add">+      (#12, #15, #19, #23, #24, #27)</span>
+        </div>
+        <div class="note" style="margin-top:14px;padding:10px;background:var(--green-soft);border-radius:6px;color:var(--green)">
+          <b>留出集得分：</b>v3 = 0.78  →  v4 候选 = <b>0.85</b><br>
+          <b>人工确认上线：</b>2026-05-26 10:14
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ====== output comparison tabs ====== -->
+    <div class="tabs">
+      <h3>第一次产出对比 · 同样的 SpaceX 承付义务段</h3>
+      <p class="muted small" style="margin-bottom:0">
+        分析师在第二轮里<b>没有</b>下任何修改指令。v4 第一次写出来的，已经覆盖了上一轮她"说出来"的所有判断。
+      </p>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="v3">v3 第一次产出 <span class="ver-tag v3">v3</span></button>
+        <button class="tab-btn" data-tab="v4">v4 第一次产出 <span class="ver-tag v4">v4</span></button>
+        <button class="tab-btn" data-tab="diff">逐项对比</button>
+      </div>
+
+      <!-- v3 tab -->
+      <div class="tab-pane active" data-pane="v3">
+        <h4>用 skill v3 写出来的承付义务段（分析师皱眉版）</h4>
+        <div class="out-block v3-out"><span class="h">关于 SpaceX 重大现金承付义务的分析</span>截至 2026-03-31，SpaceX 在 S-1 中披露的重大现金承付义务（Material Cash Commitments）主要包括以下几项：
+
+· EchoStar 频谱许可收购：约 196 亿美元总对价，预计 2027-11-30 前后交割。
+· 未偿债务：合计未偿本金 291.32 亿美元，最早一笔本金到期日 2027-08-28。
+· 最低租赁付款：合计 58.23 亿美元，本财年内到期 10.26 亿美元。
+· 第三方云算力多年期容量承诺：S-1 风险因子披露公司有"不可撤销的多年期容量承付义务"。
+· 零部件与原材料采购：常态采购协议大多无长期约束订单。
+
+<span class="h">小结</span>综合上述披露，SpaceX 当前承担着规模可观的中长期承付义务，主要由 EchoStar 频谱收购、未偿债务、租赁、云算力承诺等组成。</div>
+        <p class="muted small" style="margin-top:14px">
+          <b>分析师判断：</b>所有信息都对、所有数字都真，但<b>没用</b>。读起来像把 S-1 翻译了一遍，没有期限分布、没有结构拆分、没有近两年占比、没有"那这又怎样"。
+        </p>
+      </div>
+
+      <!-- v4 tab -->
+      <div class="tab-pane" data-pane="v4">
+        <h4>用 skill v4 写出来的承付义务段（分析师没下任何指令）</h4>
+        <div class="out-block v4-out"><span class="h">关于 SpaceX 重大现金承付义务的分析</span>截至 2026-03-31，SpaceX 在 S-1 中披露的重大现金承付义务规模可观，<b>但其现金流压力的真实节奏与披露的总额并不一致</b>。下面按"先拆构成、再排期限、最后看含义"的顺序给出。
+
+<span class="h">一、按构成拆分（区分现金 vs 股本）</span><table>
+<tr><th>类别</th><th>总额</th><th>现金部分</th><th>非现金部分</th></tr>
+<tr><td>EchoStar 频谱收购</td><td>196 亿</td><td>最高 85 亿（代付 EchoStar 债务）</td><td>111 亿（261.8M 股 A 类，固定 $42.40/股）</td></tr>
+<tr><td>总未偿债务（本金）</td><td>291.32 亿</td><td>全部现金（含可变利率）</td><td>—</td></tr>
+<tr><td>最低租赁付款</td><td>58.23 亿</td><td>全部现金</td><td>—</td></tr>
+<tr><td>云算力多年期容量</td><td>未披露</td><td>全部现金，不可撤销</td><td>—</td></tr>
+</table>
+<b>关键校正：</b>外界容易把 EchoStar 196 亿当成"近期要现金出去 196 亿"，但其中只有最高 85 亿是现金（且要到 2027-11-30 才支付），111 亿其实是股本稀释。
+
+<span class="h">二、按期限分布（24 个月节奏）</span>· <b>未来 12 个月（至 2027-03-31）：</b>租赁 10.26 亿 + 利息 + 云算力月付，<b>约 10–15 亿</b>；
+· <b>未来 12-24 个月：</b>2027-08-28 起首批债务本金到期 + EchoStar 现金 85 亿（2027-11-30）+ 持续运营，<b>现金集中点</b>；
+· <b>24 个月以上：</b>剩余债务本金 + 剩余租赁尾段。
+
+<span class="h">三、so-what · 对现金流的含义</span>1. <b>未来 18 个月并不构成现金压力高峰</b>：本财年内承付义务实际现金流出主要来自租赁与利息，规模相对可控，不需要为承付义务额外融资。
+2. <b>真正的现金压力点集中在 2027 Q3-Q4</b>：85 亿 EchoStar 现金 + 首批债务本金 + 运营现金流出在同一 6 个月内集中。<b>SpaceX 的 IPO 时点窗口大概率被这个节点倒逼</b>。
+3. <b>111 亿股本稀释的隐性成本</b>：以 $42.40 锁价对 EchoStar 发行 261.8M 股 —— IPO 后股价 vs $42.40 的偏离，决定这笔交易是折价让利还是高估自己。这是估值锚之一。
+4. <b>云算力承诺值得单列警惕</b>：S-1 风险因子明确"non-cancellable, multi-year"。具体数额未公开 —— 同时收购 xAI、运营 Starlink、自建数据中心，这部分可能是隐性现金黑洞。<b>建议追问管理层。</b></div>
+        <p class="muted small" style="margin-top:14px">
+          <b>分析师判断：</b>这次没有再下任何修改指令。v4 第一次产出已经包含上一轮她说过的所有判断 —— 那一句"承付义务太浅，拆出期限分布"，永久变成了 skill 的拷问清单第 7 条。
+        </p>
+      </div>
+
+      <!-- diff tab -->
+      <div class="tab-pane" data-pane="diff">
+        <h4>v3 vs v4 · 第一次产出的差距</h4>
+        <table style="width:100%;border-collapse:collapse;font-size:14px;margin-top:8px">
+          <thead>
+            <tr style="background:var(--bg-soft)">
+              <th style="padding:12px;border:1px solid var(--line);text-align:left">维度</th>
+              <th style="padding:12px;border:1px solid var(--line);text-align:left">v3 第一次</th>
+              <th style="padding:12px;border:1px solid var(--line);text-align:left">v4 第一次</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:10px;border:1px solid var(--line)">现金 vs 股本拆分</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">没有</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)">85 亿现金 + 111 亿股本被显式分开</td></tr>
+            <tr><td style="padding:10px;border:1px solid var(--line)">期限分布</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">没有，只列总额</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)">按 0–12 / 12–24 / 24+ 三档</td></tr>
+            <tr><td style="padding:10px;border:1px solid var(--line)">近两年占比</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">没有</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)">明确指出未来 18 个月不构成压力高峰</td></tr>
+            <tr><td style="padding:10px;border:1px solid var(--line)">对现金流的含义</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">一句"规模可观"</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)">4 条具体判断（IPO 时点 / 稀释 / 黑洞 / 追问点）</td></tr>
+            <tr><td style="padding:10px;border:1px solid var(--line)">云算力承诺</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">一笔带过</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)">单列警惕，标注未披露，给出建议追问</td></tr>
+            <tr><td style="padding:10px;border:1px solid var(--line)">分析师本轮指令数</td><td style="padding:10px;border:1px solid var(--line);color:var(--ink-4)">6 条 instructions</td><td style="padding:10px;border:1px solid var(--line);color:var(--green)"><b>0 条</b>（不需要再说）</td></tr>
+          </tbody>
+        </table>
+        <p class="muted small" style="margin-top:18px">
+          一句话：分析师上一轮花 30 分钟说出来的判断，永久变成 skill v4 的拷问清单第 7 条；下一次同类调研她的注意力被释放，可以投到更深的判断上。<b>循环水平上每次都在做事；斜率上每次都在变聪明。</b>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section id="cta">
+  <div class="wrap">
+    <span class="eyebrow">PART 03 · 飞轮</span>
+    <h2>你嘴里那句"该这样改"，<br>今天一次性使用、明天就消失了。</h2>
+    <p class="lede">
+      但只要被记住，它就会以复利方式回报你 —— 一次说出口，未来无数次同类任务自动按这条判断执行。
+      你坐在循环边缘，做循环做不了的事：新情境下的判断、和客户的谈判、对一份报告的品味判断、深夜里关于公司方向的犹豫。
+    </p>
+    <div class="ask">你的工作流，下一步该把哪一段 <span>说出来</span>？</div>
+  </div>
+</section>
+
+<footer>
+  AI Native × Skill 进化引擎 · DEMO · SpaceX S-1 案例（2026-05-20 · 提交日）<br>
+  五层循环源自 <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">Bttr · Burn Tokens, Not Headcount</a> ·
+  指令进化引擎源自《指令驱动 Skill 进化 · MVP 设计方案》
+</footer>
+
+<script>
+(function(){
+  // ----- node loop animation -----
+  var nodes = document.querySelectorAll('.diagram .node');
+  var idx = 0;
+  function tick(){
+    nodes.forEach(function(n,i){ n.classList.toggle('active', i===idx); });
+    idx = (idx+1) % nodes.length;
+  }
+  tick();
+  setInterval(tick, 1100);
+
+  // ----- tabs -----
+  document.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var tab = btn.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b===btn); });
+      document.querySelectorAll('.tab-pane').forEach(function(p){
+        p.classList.toggle('active', p.getAttribute('data-pane')===tab);
+      });
+    });
+  });
+
+  // ----- smooth scroll -----
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length>1){
+        var t = document.querySelector(id);
+        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
