@@ -1095,6 +1095,19 @@
 
   footer{padding:36px 32px;text-align:center;color:var(--ink-4);font-size:12px;background:var(--bg-soft);line-height:1.7}
   footer a{color:var(--ink-3)}
+  footer .confidential{display:inline-block;margin-bottom:10px;padding:6px 14px;border:1px solid var(--accent);color:var(--accent);font-size:11px;letter-spacing:2px;border-radius:2px;text-transform:none}
+
+  .confidential-badge{
+    position:fixed;right:18px;bottom:18px;z-index:60;
+    padding:7px 12px;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border:1px solid var(--accent);color:var(--accent);
+    font-size:11px;letter-spacing:1.5px;font-weight:600;
+    border-radius:2px;pointer-events:none;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+  }
+  @media (max-width:720px){
+    .confidential-badge{right:10px;bottom:10px;font-size:10px;padding:5px 9px;letter-spacing:1px}
+  }
 
   .ref{background:var(--bg-soft);padding:14px 18px;border-radius:8px;font-size:12.5px;color:var(--ink-3);margin-top:30px}
   .ref b{color:var(--ink-2)}
@@ -1130,14 +1143,16 @@
 <body>
 
 <div class="read-progress" aria-hidden="true"><div class="bar"></div></div>
+<div class="confidential-badge" aria-label="保密标识">观宇芯算 · 内部学习资料 · 请勿外传</div>
 
 <nav class="top">
   <div class="inner">
     <div class="brand"><span class="dot"></span>AI Native · 五层循环 × 组织飞轮 · 完整分享版</div>
     <div class="links">
       <a href="#hero">引言</a>
+      <a href="#value">意义</a>
       <a href="#main-tabs">正文</a>
-      <a href="#cta">飞轮</a>
+      <a href="#ch2-24">飞轮</a>
     </div>
   </div>
 </nav>
@@ -1157,7 +1172,7 @@
       </div>
       <div class="meta-row">
         <div><b>核心框架</b>五层循环 + 公司语境</div>
-        <div><b>理论来源</b>Bttr · Burn Tokens, Not Headcount</div>
+        <div><b>理论来源</b>YC · Diana 底层思想 + Bttr 五层切分</div>
         <div><b>贯穿案例</b>SpaceX S-1 · 2026-05-20</div>
       </div>
     </div>
@@ -1402,7 +1417,7 @@
           <ul class="v-rows">
             <li class="is-old"><span class="v-tag">OLD</span><span class="v-text-cell">失败 → 复盘会 → 吸取教训 → 下一个人重新踩</span></li>
             <li class="is-new"><span class="v-tag">NEW</span><span class="v-text-cell">失败 → artifact → 写回 skill / rule → 系统下次自动避开</span></li>
-            <li class="is-impact"><span class="v-tag">→ US</span><span class="v-text-cell">分析师每条修改指令都进 SQLite，每周反思器抽出重复模式写进下版 skill（这正是我们 MVP 跑通的循环）</span></li>
+            <li class="is-impact"><span class="v-tag">→ US</span><span class="v-text-cell">DRI 每条修改指令都进 SQLite，每周反思器抽出重复模式写进下版 skill</span></li>
           </ul>
         </div>
         <div class="v-diagram" aria-label="Failure as training data flywheel">
@@ -1599,8 +1614,8 @@
         <span class="eyebrow">PART 01 · 深度解读</span>
         <h2>Bttr 五层循环</h2>
         <p class="lede">
-          一颗大脑在中间，人坐在边缘。Bttr 在 <i>Burn Tokens, Not Headcount</i> 中提出的"循环视角"
-          把传统组织合法性来源拆穿 —— 层级是低带宽时代的应对机制，AI 让它过时。
+          一颗大脑在中间，人坐在边缘。底层思想来自 YC · Diana <i>The Playbook for Building an AI Native Company</i>，Bttr 在 <i>Burn Tokens, Not Headcount</i> 中把它框架化为五层切分 ——
+          层级是低带宽时代的应对机制，AI 让它过时。
           下面是五层 + 一个中心的最小工程定义。
         </p>
       </div>
@@ -1777,7 +1792,7 @@
 
         <div class="field-block tone-eg">
           <div class="label">EG<span class="cn">举例</span></div>
-          <div class="body">SpaceX 案例里这一层表现为<strong>静态规则校验 + 多 agent 交叉审 + DRI 最终拍板</strong>：先用脚本扫一遍格式硬伤，再让另一个 agent 盯着事实/口径，最后由 DRI 决定是否对外发出去。<strong>三道闸口逐级收紧，越后面的越贵也越权威。</strong> 这就是一个标准的 Quality Gate：自动过一道、agent 过一道、人再拍板。</div>
+          <div class="body">SpaceX 案例里这一层表现为<strong>留出集打分 + LLM-as-judge + DRI 一键确认</strong>：3 篇 DRI 修到满意的黄金终稿做留出集，LLM-as-judge 在完整性 / 结构性 / 判断性三个维度打分，新版得分必须 ≥ 基线才进入候选，最后由 DRI 看 candidate diff 拍板上线。<strong>两道闸口逐级收紧，机器先过一道、人再拍板。</strong></div>
         </div>
 
         <div class="field-block tone-reflect">
@@ -2016,8 +2031,8 @@
       </div>
 
       <div class="ref">
-        <b>出处：</b>本章节所有引文与五层结构来自 Bttr 团队公开文章 <i>Burn Tokens, Not Headcount</i>。
-        原文 → <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">https://www.makebttr.com/insights/burn-tokens-not-headcount</a>
+        <b>出处：</b>底层思想源自 YC · Diana <i>The Playbook for Building an AI Native Company</i>；五层切分由 Bttr <i>Burn Tokens, Not Headcount</i> 框架化，本章节引文与映射沿用其口径。<br>
+        Bttr 原文 → <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">https://www.makebttr.com/insights/burn-tokens-not-headcount</a>
       </div>
 
     </div>
@@ -2038,17 +2053,17 @@
         </p>
       </div>
 
-      <nav class="ch3-rail" id="ch3Rail" aria-label="组织飞轮 · 五段跳转">
+      <nav class="ch3-rail" id="ch2Rail" aria-label="组织飞轮 · 五段跳转">
         <span class="ch3-rail-label">本章导航</span>
-        <a href="#ch3-21"><span class="rail-num">2.1</span>Sensor 双入口</a>
-        <a href="#ch3-22"><span class="rail-num">2.2</span>DRI 三动作</a>
-        <a href="#ch3-23"><span class="rail-num">2.3</span>五层映射表</a>
-        <a href="#ch3-24"><span class="rail-num">2.4</span>飞轮闭环</a>
-        <a href="#ch3-25"><span class="rail-num">2.5</span>为什么值得投入</a>
+        <a href="#ch2-21"><span class="rail-num">2.1</span>Sensor 双入口</a>
+        <a href="#ch2-22"><span class="rail-num">2.2</span>DRI 三动作</a>
+        <a href="#ch2-23"><span class="rail-num">2.3</span>五层映射表</a>
+        <a href="#ch2-24"><span class="rail-num">2.4</span>飞轮闭环</a>
+        <a href="#ch2-25"><span class="rail-num">2.5</span>为什么值得投入</a>
       </nav>
 
       <!-- 3.1 Sensor 双入口 -->
-      <div class="sec-block" id="ch3-21">
+      <div class="sec-block" id="ch2-21">
         <h3><span class="sub-num blue">2.1</span>Sensor 双入口 · 任务从哪来 + 修正信号怎么进</h3>
 
         <div class="prose">
@@ -2089,7 +2104,7 @@
       </div>
 
       <!-- 3.2 DRI in the loop -->
-      <div class="sec-block" id="ch3-22">
+      <div class="sec-block" id="ch2-22">
         <h3><span class="sub-num accent">2.2</span>DRI in the loop · 人不在中间，人在边缘的三个具体位置</h3>
 
         <div class="prose">
@@ -2147,7 +2162,7 @@
       </div>
 
       <!-- 3.3 五层映射表（升级版） -->
-      <div class="sec-block" id="ch3-23">
+      <div class="sec-block" id="ch2-23">
         <h3><span class="sub-num">2.3</span>五层映射表 · 升级版</h3>
 
         <table class="map-table compact">
@@ -2188,7 +2203,7 @@
       </div>
 
       <!-- 3.4 飞轮 -->
-      <div class="sec-block" id="ch3-24">
+      <div class="sec-block" id="ch2-24">
         <h3><span class="sub-num accent">2.4</span>飞轮 · 从一次会议纪要到组织级智能</h3>
 
         <div class="prose">
@@ -2345,7 +2360,7 @@
       </div>
 
       <!-- 3.5 为什么投入 -->
-      <div class="sec-block" id="ch3-25">
+      <div class="sec-block" id="ch2-25">
         <h3><span class="sub-num">2.5</span>为什么这件事值得投入</h3>
 
         <div class="prose">
@@ -2612,11 +2627,11 @@
           <span class="stage-num">STAGE 3</span>
           <span class="stage-layer">Sensor ①b</span>
           <span class="stage-title">DRI 下达修改指令 <span class="dri-badge">DRI ② · 下指令</span></span>
-          <span class="stage-meta">MVP 纪律：改东西必须说出来</span>
+          <span class="stage-meta">纪律：改东西必须说出来</span>
         </div>
 
         <div class="prose">
-          <p>DRI 没有亲自动手改产出 —— 这是 MVP 方案的纪律：<strong>改东西必须"说出来"</strong>。她在和 agent 的对话框里直接说了下面这句话（这就是 MVP 第 5 节里的那条原话）：</p>
+          <p>DRI 没有亲自动手改产出 —— 这是循环的纪律：<strong>改东西必须"说出来"</strong>。她在和 agent 的对话框里直接说了下面这句话：</p>
         </div>
 
         <div class="instruction-box">
@@ -2641,11 +2656,11 @@
           <span class="stage-num">STAGE 4</span>
           <span class="stage-layer">Tool</span>
           <span class="stage-title">instructions 表里这条记录长什么样</span>
-          <span class="stage-meta">MVP §2.1 表结构</span>
+          <span class="stage-meta">instructions 表结构</span>
         </div>
 
         <div class="prose">
-          <p>下面是真实写入数据库的字段（按 MVP 方案 §2.1 表结构）：</p>
+          <p>下面是真实写入数据库的字段：</p>
         </div>
 
         <div class="codeblock">{
@@ -2666,7 +2681,7 @@
           <p>几个要点：</p>
           <ul>
             <li><code>instruction</code> 字段<strong>一字不改</strong>保留 DRI 的原话 —— 这是一手 why，不需要 agent 二次推断。</li>
-            <li><code>issue_category</code> 留空 —— MVP 阶段允许反思器在归纳时再补这一栏。</li>
+            <li><code>issue_category</code> 留空 —— 反思器在归纳时再补这一栏。</li>
             <li><code>agent_output_before</code> 存了 v3 的原产出，方便反思器看到"被指令针对的那段长什么样"。</li>
             <li><code>promoted_to_skill = false</code> —— 防止下一轮反思器重复消费同一条。</li>
           </ul>
@@ -2699,7 +2714,7 @@
         </div>
 
         <div class="prose">
-          <p>到 05-25 周日晚上，自动 cron 触发反思器（按文档 §4.1：每周固定跑一次，且 <code>task_type = prospectus_research</code> 下未消费指令已超过 N=5 条）。</p>
+          <p>到 05-25 周日晚上，自动 cron 触发反思器（每周固定跑一次，且 <code>task_type = prospectus_research</code> 下未消费指令已超过 N=5 条）。</p>
         </div>
 
         <h4 style="margin:24px 0 12px;font-size:14px;color:var(--ink-3);letter-spacing:1px">▼ 反思器读完 6 条指令后的归纳（输出 JSON 节选）</h4>
@@ -2729,13 +2744,13 @@
           <span class="stage-num">STAGE 6</span>
           <span class="stage-layer">Quality Gate</span>
           <span class="stage-title">验证闸 · 留出集打分 + DRI 一键确认 <span class="dri-badge">DRI ③ · 守闸门</span></span>
-          <span class="stage-meta">MVP §4.3</span>
+          <span class="stage-meta">验证闸 · 留出集打分</span>
         </div>
 
         <div class="prose">
-          <p>候选补丁不直接上线，要先过留出集（MVP §4.3）。</p>
+          <p>候选补丁不直接上线，要先过留出集。</p>
           <p>
-            <strong>留出集：</strong>DRI 此前已经修改到满意的 3 篇黄金终稿（包含承付义务、研发费、CapEx 三个章节，分别来自 SpaceX、OpenAI 内部参考稿、Stripe 内部参考稿）。<br>
+            <strong>留出集：</strong>DRI 此前已经修改到满意的 3 篇黄金终稿（覆盖承付义务、研发费、CapEx 三个章节）。<br>
             <strong>LLM-as-judge 打分维度：</strong>完整性（是否覆盖期限分布）、结构性（是否拆出构成）、判断性（是否给出 so-what）。
           </p>
           <p><strong>结果：</strong></p>
@@ -2746,9 +2761,9 @@
             <tr><th>留出集稿件</th><th style="text-align:right">skill v3 得分</th><th style="text-align:right">skill v4 候选得分</th></tr>
           </thead>
           <tbody>
-            <tr><td>SpaceX · 承付义务终稿</td><td class="v3-score">0.72</td><td class="v4-score">0.88</td></tr>
-            <tr><td>OpenAI · 研发费终稿</td><td class="v3-score">0.81</td><td class="v4-score">0.86</td></tr>
-            <tr><td>Stripe · CapEx 终稿</td><td class="v3-score">0.79</td><td class="v4-score">0.82</td></tr>
+            <tr><td>留出集稿件 · 承付义务（SpaceX）</td><td class="v3-score">0.72</td><td class="v4-score">0.88</td></tr>
+            <tr><td>留出集稿件 · 研发费（同业 A）</td><td class="v3-score">0.81</td><td class="v4-score">0.86</td></tr>
+            <tr><td>留出集稿件 · CapEx（同业 B）</td><td class="v3-score">0.79</td><td class="v4-score">0.82</td></tr>
             <tr class="avg"><td><strong>平均</strong></td><td class="v3-score">0.78</td><td class="v4-score">0.85</td></tr>
           </tbody>
         </table>
@@ -2815,7 +2830,7 @@
 
         <div class="prose">
           <p>
-            2026-05-27，DRI 在做另一份发射服务公司招股书调研时，让 agent 重跑了一遍 SpaceX 的承付义务段。
+            2026-05-27，DRI 让 agent 用 skill v4 重跑一遍 SpaceX 的承付义务段，看第一次产出长什么样。
             <strong>注意：这次 DRI 什么都没说</strong>，agent 只是按 v4 的规则去写。
           </p>
           <p>下面是 v4 第一次产出（"第一次"是指：DRI 还没下任何修改指令）：</p>
@@ -2963,19 +2978,19 @@
 
       <!-- 附录 B -->
       <div class="sec-block">
-        <h3>附录 B · 本案例对应 MVP 方案的章节</h3>
+        <h3>附录 B · 9 个阶段在五层循环 + 组织飞轮里的位置</h3>
         <table class="gen-table">
-          <thead><tr><th>阶段</th><th>对应 MVP 方案章节</th></tr></thead>
+          <thead><tr><th>阶段</th><th>对应到五层循环 + 组织飞轮</th></tr></thead>
           <tbody>
-            <tr><td>STAGE 0 投委会纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §2.1 Sensor 双入口 · §2.2 DRI 三落点</td></tr>
-            <tr><td>STAGE 1 DRI 接任务 · 查 skill 版本</td><td>§1 任务起点 · §3 skill 版本绑定</td></tr>
-            <tr><td>STAGE 2 v3 第一次产出</td><td>§5 贯穿实例 · 第一行</td></tr>
-            <tr><td>STAGE 3 DRI ② 下达修改指令</td><td>§5 贯穿实例 · 第二行（保留原话）</td></tr>
-            <tr><td>STAGE 4 instructions 表结构</td><td>§2.1 instructions 表</td></tr>
-            <tr><td>STAGE 5 反思器归纳同类模式</td><td>§4.2 反思器 prompt</td></tr>
-            <tr><td>STAGE 6 留出集打分 + DRI ③ 守闸门</td><td>§4.3 验证闸</td></tr>
-            <tr><td>STAGE 7 skill v3 → v4 · diff</td><td>§5.1 skill v3 → v4</td></tr>
-            <tr><td>STAGE 8 v4 第一次产出 · 蒸馏发生了</td><td>§5 蒸馏发生了</td></tr>
+            <tr><td>STAGE 0 投委会纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §2.1 Sensor 双入口 · §2.2 DRI 三落点 · ① 接 Sensor</td></tr>
+            <tr><td>STAGE 1 DRI 接任务 · 查 skill 版本</td><td>Policy 层 · skill 版本绑定（CH01 §1.2）</td></tr>
+            <tr><td>STAGE 2 v3 第一次产出</td><td>Tool 层 · agent 调用确定性 API（CH01 §1.3）</td></tr>
+            <tr><td>STAGE 3 DRI ② 下达修改指令</td><td>Sensor ①b 修正信号入口 · §2.2 DRI 三落点 · ② 下指令</td></tr>
+            <tr><td>STAGE 4 instructions 表结构</td><td>Tool 层 · log_instruction() 落库</td></tr>
+            <tr><td>STAGE 5 反思器归纳同类模式</td><td>Learning 层 · 反思器周期归纳（CH01 §1.5）</td></tr>
+            <tr><td>STAGE 6 留出集打分 + DRI ③ 守闸门</td><td>Quality Gate · 留出集 + DRI 一键确认 · §2.2 DRI 三落点 · ③ 守闸门</td></tr>
+            <tr><td>STAGE 7 skill v3 → v4 · diff</td><td>Context 层 · skill 版本沉淀回写</td></tr>
+            <tr><td>STAGE 8 v4 第一次产出 · 蒸馏发生了</td><td>下一圈起点更高 · 飞轮 N8（组织飞轮 §2.4）</td></tr>
           </tbody>
         </table>
       </div>
@@ -2985,20 +3000,8 @@
 
 </div>
 
-<!-- ============ CTA ============ -->
-<section id="cta">
-  <div class="wrap">
-    <span class="eyebrow">FLYWHEEL</span>
-    <h2>你嘴里那句"该这样改"，<br>今天一次性使用、明天就消失了。</h2>
-    <p class="lede">
-      但只要被记住，它就会以复利方式回报你 —— 一次说出口，未来无数次同类任务自动按这条判断执行。
-      你坐在循环边缘，做循环做不了的事：新情境下的判断、和客户的谈判、对一份报告的品味判断、深夜里关于公司方向的犹豫。
-    </p>
-    <div class="ask">你的工作流，下一步该把哪一段 <span>说出来</span>？</div>
-  </div>
-</section>
-
 <footer>
+  <div class="confidential">观宇芯算 · 内部学习资料 · 请勿外传</div><br>
   AI Native · 五层循环 × 组织飞轮 · 完整分享版 · SpaceX S-1 案例（2026-05-20 · 提交日）<br>
   底层思想源自 <a href="https://www.ycombinator.com/library/OX-the-playbook-for-building-an-ai-native-company" target="_blank">YC · Diana · The Playbook for Building an AI Native Company</a> · 五层切分由 <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">Bttr · Burn Tokens, Not Headcount</a> 框架化
 </footer>
@@ -3112,14 +3115,21 @@
     });
   });
 
-  /* ===== smooth scroll for in-page links ===== */
+  /* ===== smooth scroll for in-page links (auto-switches tab if target is in a hidden pane) ===== */
   document.querySelectorAll('a[href^="#"]').forEach(function(a){
     a.addEventListener('click', function(e){
       var id = a.getAttribute('href');
-      if(id.length>1){
-        var t = document.querySelector(id);
-        if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+      if(id.length<=1) return;
+      var t = document.querySelector(id);
+      if(!t) return;
+      e.preventDefault();
+      var pane = t.closest('.main-pane');
+      if(pane && !pane.classList.contains('active')){
+        var mtab = pane.getAttribute('data-mpane');
+        var btn = document.querySelector('.main-tab[data-mtab="'+mtab+'"]');
+        if(btn) activate(btn, {scroll:false});
       }
+      requestAnimationFrame(function(){ t.scrollIntoView({behavior:'smooth',block:'start'}); });
     });
   });
 
@@ -3234,9 +3244,9 @@
     }
   }
 
-  /* ===== CH02 rail scroll-spy (sections kept ch3- id prefix for stability) ===== */
-  var ch3Secs = Array.prototype.slice.call(document.querySelectorAll('.sec-block[id^="ch3-"]'));
-  var ch3Links = Array.prototype.slice.call(document.querySelectorAll('.ch3-rail a[href^="#ch3-"]'));
+  /* ===== CH02 rail scroll-spy ===== */
+  var ch3Secs = Array.prototype.slice.call(document.querySelectorAll('.sec-block[id^="ch2-2"]'));
+  var ch3Links = Array.prototype.slice.call(document.querySelectorAll('.ch3-rail a[href^="#ch2-"]'));
   if(ch3Secs.length && ch3Links.length && 'IntersectionObserver' in window){
     var ch3Vis = {};
     var ch3Spy = new IntersectionObserver(function(entries){
