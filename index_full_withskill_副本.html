@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Native 组织 · 五层循环 × 组织飞轮 · 完整分享版</title>
+<title>AI Native 组织 × 指令驱动 Skill 进化 · 完整分享版</title>
 <style>
   :root{
     --bg:#fafaf7;
@@ -348,7 +348,89 @@
   .layer-mini[data-tone="ctx"]{grid-column:span 3;background:linear-gradient(180deg,var(--bg-card) 0%,var(--purple-soft) 100%)}
   .layer-mini[data-tone="ctx"] .en{min-height:auto}
 
-  /* ===== CH02 sticky rail (mirrors ch1-rail pattern) ===== */
+  /* ===== CH02 sticky rail (mirrors ch1-rail / ch3-rail pattern) ===== */
+  .ch2-rail{
+    position:sticky;top:113px;z-index:30;
+    margin:0 -32px 32px;padding:10px 32px;
+    background:rgba(250,250,247,.94);backdrop-filter:saturate(160%) blur(10px);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  }
+  .ch2-rail .ch2-rail-label{
+    font-size:10px;letter-spacing:1.6px;font-weight:800;color:var(--ink-4);
+    text-transform:uppercase;
+  }
+  .ch2-rail a{
+    display:inline-flex;align-items:baseline;gap:8px;text-decoration:none;
+    font-size:12px;color:var(--ink-3);font-weight:600;
+    padding:5px 11px;border:1px solid transparent;border-radius:99px;
+    transition:color .2s,background .2s,border-color .2s;
+  }
+  .ch2-rail a .rail-num{
+    font-family:"SF Mono","JetBrains Mono",ui-monospace,monospace;
+    font-size:10.5px;font-weight:700;color:var(--ink-4);letter-spacing:.3px;
+    transition:color .2s;
+  }
+  .ch2-rail a[data-tone="sensor"] .rail-num{color:var(--blue)}
+  .ch2-rail a[data-tone="ctx"] .rail-num{color:var(--purple)}
+  .ch2-rail a[data-tone="learn"] .rail-num{color:var(--accent)}
+  .ch2-rail a[data-tone="gate"] .rail-num{color:var(--red)}
+  .ch2-rail a:hover{color:var(--ink);background:var(--bg-soft)}
+  .ch2-rail a.is-current{color:var(--ink);background:var(--bg-card);border-color:var(--line-2)}
+  .ch2-rail a.is-current[data-tone="sensor"]{border-color:var(--blue)}
+  .ch2-rail a.is-current[data-tone="ctx"]{border-color:var(--purple)}
+  .ch2-rail a.is-current[data-tone="learn"]{border-color:var(--accent)}
+  .ch2-rail a.is-current[data-tone="gate"]{border-color:var(--red)}
+  @media (max-width:880px){
+    .ch2-rail{margin:0 -16px 24px;padding:8px 16px;gap:8px;overflow-x:auto;flex-wrap:nowrap}
+    .ch2-rail::-webkit-scrollbar{display:none}
+    .ch2-rail a{flex-shrink:0}
+  }
+
+  /* ===== CH02 §2.x layer-pin chip (replaces "在五层循环里的位置" callout) ===== */
+  .layer-pin{
+    display:inline-flex;align-items:center;gap:10px;
+    margin:18px 0 4px;padding:7px 14px 7px 10px;
+    border:1px solid var(--line-2);border-radius:99px;
+    background:var(--bg-card);text-decoration:none;
+    font-size:12px;color:var(--ink-2);line-height:1;
+    transition:background .2s,border-color .2s,color .2s,transform .2s cubic-bezier(.16,1,.3,1);
+  }
+  .layer-pin:hover{background:var(--bg-soft);color:var(--ink);transform:translateX(3px)}
+  .layer-pin .lp-tag{
+    font-family:"SF Mono",monospace;font-size:9.5px;letter-spacing:1.4px;font-weight:800;
+    color:#fff;padding:4px 8px;border-radius:99px;text-transform:uppercase;
+  }
+  .layer-pin[data-tone="sensor"] .lp-tag{background:var(--blue)}
+  .layer-pin[data-tone="ctx"]    .lp-tag{background:var(--purple)}
+  .layer-pin[data-tone="learn"]  .lp-tag{background:var(--accent)}
+  .layer-pin[data-tone="gate"]   .lp-tag{background:var(--red)}
+  .layer-pin .lp-text{font-weight:600;color:var(--ink-2)}
+  .layer-pin .lp-arrow{
+    font-family:"SF Mono",monospace;font-size:10px;color:var(--ink-4);font-weight:700;
+    margin-left:2px;
+  }
+  .layer-pin:hover .lp-arrow{color:var(--accent)}
+
+  /* ===== §2.5 panorama SVG: clickable action rects ===== */
+  .svg-wrap svg .evo-step{cursor:pointer;transition:transform .35s cubic-bezier(.16,1,.3,1);transform-box:fill-box;transform-origin:center}
+  .svg-wrap svg .evo-step:hover{transform:scale(1.03)}
+  .svg-wrap svg .evo-step rect.evo-hit{fill:transparent;stroke:transparent}
+  .svg-wrap svg .evo-step.is-flash > rect:nth-of-type(1){animation:evoFlash 1.4s ease-out 1}
+  @keyframes evoFlash{
+    0%{filter:none}
+    20%{filter:drop-shadow(0 0 0 rgba(194,94,52,0))}
+    40%{filter:drop-shadow(0 0 12px rgba(194,94,52,.55))}
+    100%{filter:none}
+  }
+  .sec-block.is-flash{animation:secFlash 1.4s ease-out 1}
+  @keyframes secFlash{
+    0%{background:transparent}
+    25%{background:var(--accent-soft)}
+    100%{background:transparent}
+  }
+
+  /* ===== CH03 sticky rail (mirrors ch1-rail pattern) ===== */
   .ch3-rail{
     position:sticky;top:113px;z-index:30;
     margin:0 -32px 32px;padding:10px 32px;
@@ -725,7 +807,26 @@
   .lf-vline{height:24px;border-left:2px dashed var(--ink-4);margin:4px auto;width:0}
   .lf-label{font-size:11px;color:var(--ink-3);letter-spacing:1px;font-weight:700;text-align:center;margin:8px 0;text-transform:uppercase}
 
-  /* 飞轮图 (Tab 2 §2.2) — circular flow */
+  /* 进化引擎 4 步图 (Tab 2 §2.5) */
+  .evo-flow{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
+    padding:34px 28px;margin:30px 0;box-shadow:var(--shadow);
+  }
+  .evo-step{display:grid;grid-template-columns:60px 1fr;gap:18px;align-items:start;padding:14px 0;border-bottom:1px dashed var(--line-2)}
+  .evo-step:last-child{border-bottom:none}
+  .evo-step .es-num{
+    background:var(--accent);color:#fff;width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;
+    font-family:"SF Mono",monospace;
+  }
+  .evo-step .es-body h4{margin:0 0 6px;font-size:16px}
+  .evo-step .es-body .es-from{font-size:13px;color:var(--ink-3);font-style:italic;margin-bottom:8px}
+  .evo-step .es-body .es-from b{color:var(--accent);font-style:normal}
+  .evo-step .es-body .es-desc{font-size:14px;color:var(--ink-2);line-height:1.7}
+  .evo-step.start .es-num{background:var(--ink)}
+  .evo-step.end .es-num{background:var(--green)}
+
+  /* 飞轮图 (Tab 3 §3.2) — circular flow */
   .flywheel{
     background:var(--bg-card);border:1px solid var(--line);border-radius:14px;
     padding:40px 30px;margin:30px 0;box-shadow:var(--shadow);
@@ -1133,7 +1234,7 @@
 
 <nav class="top">
   <div class="inner">
-    <div class="brand"><span class="dot"></span>AI Native · 五层循环 × 组织飞轮 · 完整分享版</div>
+    <div class="brand"><span class="dot"></span>AI Native × Skill 进化引擎 · 完整分享版</div>
     <div class="links">
       <a href="#hero">引言</a>
       <a href="#main-tabs">正文</a>
@@ -1202,7 +1303,7 @@
 <section id="value">
   <div class="wrap">
     <span class="eyebrow">VALUE · 这个架构对公司意味着什么</span>
-    <h2>循环跑起来之后，公司会变成什么样。</h2>
+    <h2>Hero 讲循环长什么样，本节讲循环跑起来后、公司会变成什么样。</h2>
     <p class="lede">
       下面六条不是口号，是从 YC playbook 和 Bttr 视角拆出来的价值判断，每一条都对应一个"组织运行方式上的硬切换"——
       旧的做法是什么、新的做法是什么、对我们意味着哪个具体变化。每页右边的图示是这条价值在结构上的样子。
@@ -1579,7 +1680,8 @@
   <div class="wrap">
     <div class="main-tab-bar">
       <button class="main-tab active" data-mtab="ch1"><span class="num">CH 01</span>五层循环</button>
-      <button class="main-tab" data-mtab="ch2"><span class="num">CH 02</span>组织飞轮</button>
+      <button class="main-tab" data-mtab="ch2"><span class="num">CH 02</span>进化引擎</button>
+      <button class="main-tab" data-mtab="ch3"><span class="num">CH 03</span>组织飞轮</button>
       <button class="main-tab" data-mtab="case"><span class="num">CASE</span>SpaceX 完整案例</button>
       <span class="main-tab-indicator" aria-hidden="true"></span>
     </div>
@@ -1674,7 +1776,7 @@
 
         <div class="field-block tone-eg">
           <div class="label">EG<span class="cn">举例</span></div>
-          <div class="body">YC 的做法被 Bttr 单独拎出来当典型 —— <strong>2000 小时合伙人录音</strong>全都喂进系统，让 AI 在一个周末重生成 150 页用户手册，从此每月自动更新。这就是把"老合伙人脑子里的隐性知识"变成感知层的常规输入。再举一个更日常的：你和分析师的每一次微信对话、每一条修改意见，如果没有被 log 到一个 agent 看得到的地方，那这条信息就根本没有"发生过"。SpaceX 案例里这一层表现为<strong>把 DRI 给 agent 的每一条修改指令、每一次推翻判断都落到一个共享日志里</strong>，下一轮循环起手就能读到 —— 没记下的指令，对循环来说就等于没发生过。</div>
+          <div class="body">YC 的做法被 Bttr 单独拎出来当典型 —— <strong>2000 小时合伙人录音</strong>全都喂进系统，让 AI 在一个周末重生成 150 页用户手册，从此每月自动更新。这就是把"老合伙人脑子里的隐性知识"变成感知层的常规输入。再举一个更日常的：你和分析师的每一次微信对话、每一条修改意见，如果没有被 log 到一个 agent 看得到的地方，那这条信息就根本没有"发生过"。我们做指令驱动 Skill 进化的第一个动作 —— "记录指令" —— 本质上就是在补这一层的传感器。</div>
         </div>
 
         <div class="field-block tone-reflect">
@@ -1777,7 +1879,7 @@
 
         <div class="field-block tone-eg">
           <div class="label">EG<span class="cn">举例</span></div>
-          <div class="body">SpaceX 案例里这一层表现为<strong>静态规则校验 + 多 agent 交叉审 + DRI 最终拍板</strong>：先用脚本扫一遍格式硬伤，再让另一个 agent 盯着事实/口径，最后由 DRI 决定是否对外发出去。<strong>三道闸口逐级收紧，越后面的越贵也越权威。</strong> 这就是一个标准的 Quality Gate：自动过一道、agent 过一道、人再拍板。</div>
+          <div class="body">在我们的 Skill 进化引擎里，这一层就是<strong>留出集 + LLM-as-judge 打分 + 人工最终确认</strong>。MVP 文档原话是："新版得分 ≥ 基线才进入候选；否则丢弃……通过验证的候选，由你一键确认上线。skill 变更是高风险动作，人在闭环。" 这就是一个标准的 Quality Gate：先自动过一道（留出集打分），再人工拍板（一键确认）。</div>
         </div>
 
         <div class="field-block tone-reflect">
@@ -1814,7 +1916,7 @@
           <div class="body">
             Bttr 给出的 YC 案例非常生动 —— 一次查询失败了，监控 agent 自动追问"为什么"：是错的工具？是缺的 skills 文件？是过期索引？是错误视图？诊断出来后，agent 写补丁、提 MR；第二个 agent review、合并、部署。<strong>第二天早晨，整个 codebase 都比昨晚聪明了一点。</strong>
             <em style="display:block;margin-top:10px">"Runs overnight. By morning the codebase is smarter."</em>
-            SpaceX 案例里这一层表现为<strong>"反思 → skill 补丁 → 下一轮自动加载"</strong>：DRI 这周改了哪些 prompt、推翻了 agent 的哪些判断，全部沉淀成新的 skill 文件；下一次同类任务起手就是这周改过的版本。<strong>核心动作完全同构：失败 → 反思 → 修复 → 部署 → 下一轮起点更高。</strong>
+            落到我们 Skill 进化引擎，这一层就是<strong>反思器</strong>：把这一周积累的修改指令读进来，归纳出反复出现的模式，写出 skill 补丁，验证后上线。区别只在于 —— Bttr 的例子里被改的是代码，我们这里被改的是 skill。<strong>核心动作完全同构：失败 → 反思 → 修复 → 部署 → 下一轮起点更高。</strong>
           </div>
         </div>
 
@@ -2024,32 +2126,398 @@
   </div>
 
   <!-- ====================================== -->
-  <!-- TAB 2 · 组织飞轮                        -->
+  <!-- TAB 2 · 进化引擎                        -->
   <!-- ====================================== -->
   <div class="main-pane" data-mpane="ch2">
     <div class="wrap">
 
       <div class="ch-head">
-        <span class="eyebrow">PART 02 · 落地</span>
+        <span class="eyebrow">PART 02 · MVP 设计</span>
+        <h2>指令驱动 Skill 进化引擎 · 四步动作</h2>
+        <p class="lede">
+          MVP 设计塌缩到只剩一种修正通道：人用一句自然语言指令让 agent 改。
+          指令本身就是最高质量、无损的训练信号 —— 哪里不对、该怎么改、为什么，全在一句话里。
+          下面是这套引擎的四个动作，全部引用《MVP 设计方案》原文。
+        </p>
+      </div>
+
+      <nav class="ch2-rail" id="ch2Rail" aria-label="进化引擎 · 六段跳转">
+        <span class="ch2-rail-label">本章导航</span>
+        <a href="#ch2-20"><span class="rail-num">2.0</span>一句话方案</a>
+        <a href="#ch2-21" data-tone="sensor"><span class="rail-num">2.1</span>记录指令</a>
+        <a href="#ch2-22" data-tone="ctx"><span class="rail-num">2.2</span>入库</a>
+        <a href="#ch2-23" data-tone="learn"><span class="rail-num">2.3</span>反思器</a>
+        <a href="#ch2-24" data-tone="gate"><span class="rail-num">2.4</span>验证后进化</a>
+        <a href="#ch2-25"><span class="rail-num">2.5</span>全景图</a>
+      </nav>
+
+      <!-- 2.0 一句话方案 -->
+      <div class="sec-block" id="ch2-20">
+        <h3><span class="sub-num accent">2.0</span>一句话方案</h3>
+
+        <div class="prose">
+          <p>MVP 文档开篇直接给出立场：</p>
+        </div>
+
+        <div class="big-quote">
+          分析师不再埋头改 agent 的产出，而是用一句自然语言指令让 agent 去改 ——「承付义务这段太浅，拆出期限分布，重点说近两年占比」。这句指令本身就是最高质量的训练信号：它无损地说清了「哪里不对、该怎么改、为什么」。系统把这些指令攒起来，定期让反思器提炼出反复出现的模式，改写进 skill。下次同类调研，agent 第一次产出就已经包含了这个判断。
+        </div>
+
+        <div class="prose">
+          <p>为什么只保留"指令驱动"这一种修正通道，而不要"直接改产出"那种？文档解释得很硬：</p>
+        </div>
+
+        <div class="callout lbl-strong" data-lbl="MVP 文档原文">
+          「直接改产出」只留下 diff，「为什么」丢了，得靠 agent 反推 —— 有损、可能推错。「指令驱动」里，「为什么」是人亲口说的 —— 无损、零推断，还省掉整个归因环节。
+        </div>
+
+        <div class="prose">
+          <p>底层有一个很简单的纪律要求：<strong>改东西必须"说出来"，不能埋头自己改。</strong>这恰好和 Bttr 关于 Company Context 的那句 <em>"If it was not recorded, it did not happen to the intelligence"</em> 完全咬合 —— 没说出来的判断，对 skill 而言就是没有发生过。</p>
+        </div>
+      </div>
+
+      <!-- 2.1 Action 1 -->
+      <div class="sec-block" id="ch2-21">
+        <h3><span class="sub-num blue">2.1</span>动作 ① · 记录指令</h3>
+
+        <div class="field-block">
+          <div class="label">DO<span class="cn">做什么</span></div>
+          <div class="body">分析师在和 agent 的对话里，本来就会说"这段改成……""补一下……"。MVP 只需在 agent 收到这类修改指令时，顺手把指令记一条。</div>
+        </div>
+
+        <div class="field-block">
+          <div class="label">HOW<span class="cn">怎么做</span></div>
+          <div class="body">agent 每次执行完一条修改指令，自己调一个 <code>log_instruction()</code> 写库。文档给的伪代码：</div>
+        </div>
+
+        <div class="codeblock"><span class="c-kw">def</span> <span class="c-fn">on_revision_instruction</span>(user_msg, ctx):
+    <span class="c-fn">log_instruction</span>({
+        <span class="c-str">"task_type"</span>:           ctx.task_type,           <span class="c-comment"># prospectus_research</span>
+        <span class="c-str">"skill_id"</span>:            ctx.skill_id,
+        <span class="c-str">"skill_version"</span>:       ctx.skill_version,       <span class="c-comment"># v3</span>
+        <span class="c-str">"target_section"</span>:      ctx.current_section,     <span class="c-comment"># 承付义务分析</span>
+        <span class="c-str">"instruction"</span>:         user_msg,                <span class="c-comment"># 人的原话，一字不改</span>
+        <span class="c-str">"agent_output_before"</span>: ctx.last_output_of_section,
+    })
+    <span class="c-comment"># 然后正常执行修改…</span>
+</div>
+
+        <div class="field-block">
+          <div class="label">RULE<span class="cn">唯一判断</span></div>
+          <div class="body">什么算"修改指令"？文档原文："不是所有对话都要记。只记「针对已有产出、要求改进」的指令。简单规则：agent 自判 ——「这条消息是在让我修改刚才的产出吗？」是 → 记录；否（新任务、闲聊、提问）→ 跳过。MVP 可以先宽松记录，后续用 issue_category 过滤噪声。<strong>宁可多记，不可漏记。</strong>"</div>
+        </div>
+
+        <a class="layer-pin" data-tone="sensor" href="#layer-1">
+          <span class="lp-tag">SENSOR</span>
+          <span class="lp-text">补传感器：把分析师嘴里飘走的修正信号落到 agent 看得见的地方</span>
+          <span class="lp-arrow">→ §1.1</span>
+        </a>
+      </div>
+
+      <!-- 2.2 Action 2 -->
+      <div class="sec-block" id="ch2-22">
+        <h3><span class="sub-num purple">2.2</span>动作 ② · 入库</h3>
+
+        <div class="field-block">
+          <div class="label">DO<span class="cn">做什么</span></div>
+          <div class="body">把指令事件写进 SQLite 的 <code>instructions</code> 表。MVP 阶段就这一张主表，9 个字段：</div>
+        </div>
+
+        <table class="schema-table">
+          <thead>
+            <tr><th>字段</th><th>类型</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>id</td><td>INTEGER PK</td><td>事件唯一 ID</td></tr>
+            <tr><td>ts</td><td>TIMESTAMP</td><td>发生时间</td></tr>
+            <tr><td>task_type</td><td>TEXT</td><td>任务类型，如 prospectus_research</td></tr>
+            <tr><td>skill_id / skill_version</td><td>TEXT</td><td>本次用的 skill 及版本</td></tr>
+            <tr><td>target_section</td><td>TEXT</td><td>指令针对的章节，如"承付义务分析"</td></tr>
+            <tr class="highlight"><td><b>instruction</b></td><td>TEXT</td><td><b>【核心】人说的原话，一字不改。这就是一手的 why</b></td></tr>
+            <tr><td>issue_category</td><td>TEXT</td><td>问题归类（可选，反思器可自动打）</td></tr>
+            <tr><td>agent_output_before</td><td>TEXT</td><td>被指令针对的那段 agent 原产出（给反思器上下文）</td></tr>
+            <tr><td>promoted_to_skill</td><td>BOOLEAN</td><td>是否已被进化进 skill（防重复消费）</td></tr>
+          </tbody>
+        </table>
+
+        <div class="prose">
+          <p>文档强调的"砍掉了哪些字段"很关键：</p>
+        </div>
+
+        <div class="callout lbl-strong" data-lbl="文档原文">
+          ✗ why_reason —— 被 instruction 取代（指令本身就是 why）<br>
+          ✗ revised_output —— MVP 不必存改后稿，指令已含意图<br>
+          ✗ reason_source / severity / embedding —— 归因相关，全部不需要<br>
+          <strong>一张表从 13 个字段瘦到 9 个，且没有一个需要「推断」。</strong>
+        </div>
+
+        <div class="prose">
+          <p>
+            为什么强调"没有一个字段需要推断"？因为推断会引入噪声 —— 一旦你让系统去猜"分析师为什么改"，就会有猜错的时候，错误一旦进库就污染后面的反思器。<strong>指令本身就是 why，无需推断</strong>，是这套设计最干净的地方。
+          </p>
+          <p>
+            配套表 <code>skill_versions</code> 让 skill 可回滚：每次进化留痕，新版必须 ≥ 基线分才能上线，否则丢弃。这是"不退步"的硬约束，MVP 也不能省。
+          </p>
+        </div>
+
+        <a class="layer-pin" data-tone="ctx" href="#layer-6">
+          <span class="lp-tag">CONTEXT</span>
+          <span class="lp-text">每一条入库的指令，都是公司大脑里多了一条可读的判断</span>
+          <span class="lp-arrow">→ §1.6</span>
+        </a>
+      </div>
+
+      <!-- 2.3 Action 3 -->
+      <div class="sec-block" id="ch2-23">
+        <h3><span class="sub-num yellow">2.3</span>动作 ③ · 反思器提炼</h3>
+
+        <div class="field-block">
+          <div class="label">DO<span class="cn">做什么</span></div>
+          <div class="body">定期或攒够触发，把同类指令喂给反思器，归纳出反复出现的模式，产出"skill 补丁建议"。</div>
+        </div>
+
+        <div class="field-block">
+          <div class="label">WHEN<span class="cn">触发时机</span></div>
+          <div class="body">
+            <ul style="margin:0;padding-left:20px">
+              <li><strong>按量：</strong>某 task_type 下未消费的指令攒够 N 条（建议 N=5–8）</li>
+              <li><strong>按期：</strong>每周固定跑一次</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="prose">
+          <p><strong>反思器 prompt</strong>（文档原文，可直接用）：</p>
+        </div>
+
+        <div class="codeblock">你是 skill 的「进化器」。下面是 skill 当前版本，以及最近一批
+分析师在使用它时下达的【修改指令】(这些指令直接代表了
+人类的判断:哪里不够好、应该怎么改)。
+
+【当前 skill v{n}】
+{skill_content}
+
+【最近的修改指令】
+{instructions: [{instruction, target_section,
+                 agent_output_before}, ...]}
+
+请你:
+1. 找出【反复出现 ≥2 次】的指令模式,忽略一次性的特例
+2. 为每个模式,提出对 skill 的最小必要修改(增量,别重构)
+3. 指明改动放在 skill 哪一节、新增或修改哪条规则
+4. 标注每条改动消费了哪些 instruction id(供追溯)
+
+输出 JSON:
+{ patches: [{section, change_type, new_rule,
+             based_on_ids}], rationale }
+</div>
+
+        <div class="prose">
+          <p>
+            注意"反复出现 ≥2 次"和"忽略一次性的特例"两条 —— 这是反思器的"信号去噪规则"。一次性的指令可能是分析师当下情境下的特殊需求，硬塞进 skill 反而会让所有未来任务都被它绑架；只有反复出现的模式，才说明这是一个<strong>普遍判断</strong>，值得变成 skill 的一部分。
+          </p>
+        </div>
+
+        <a class="layer-pin" data-tone="learn" href="#layer-5">
+          <span class="lp-tag">LEARNING</span>
+          <span class="lp-text">"By morning it knows more than it did last night" 的工程化实现 —— 改进的是 skill 的判断条款</span>
+          <span class="lp-arrow">→ §1.5</span>
+        </a>
+      </div>
+
+      <!-- 2.4 Action 4 -->
+      <div class="sec-block" id="ch2-24">
+        <h3><span class="sub-num red">2.4</span>动作 ④ · 验证后进化</h3>
+
+        <div class="field-block">
+          <div class="label">DO<span class="cn">做什么</span></div>
+          <div class="body">反思器吐出补丁建议之后，不直接上线，要先过两道闸 —— 留出集自动验证 + 人工最终确认。</div>
+        </div>
+
+        <div class="callout lbl-strong" data-lbl="MVP 文档原文">
+          <strong>留出集。</strong>攒一组人改到满意的「黄金终稿」做留出集。skill 改写后在上面重跑，LLM-as-judge 打分。<br>
+          <strong>只升不降。</strong>新版得分 ≥ 基线才进入候选；否则丢弃（但保留记录，失败也是数据）。<br>
+          <strong>人工上线。</strong>通过验证的候选，由你一键确认上线。skill 变更是高风险动作，人在闭环。
+        </div>
+
+        <div class="prose">
+          <p>这两道闸特别关键，因为<strong>自我改写本身有退步风险</strong>。文档直接点了一句业界铁律：</p>
+        </div>
+
+        <div class="big-quote">
+          自我改进只在结果可验证处有效。
+        </div>
+
+        <div class="prose">
+          <p>也就是说，让一个系统改自己是危险的 —— 除非你有一把"客观尺子"在那里量它改完之后是不是真的变好了。留出集就是那把尺子。</p>
+        </div>
+
+        <a class="layer-pin" data-tone="gate" href="#layer-4">
+          <span class="lp-tag">QUALITY GATE</span>
+          <span class="lp-text">把高风险动作的边界画在"一键人工确认"上 —— autonomy 与 oversight 的分界线设在这里</span>
+          <span class="lp-arrow">→ §1.4</span>
+        </a>
+      </div>
+
+      <!-- 2.5 简化图示 -->
+      <div class="sec-block" id="ch2-25">
+        <h3><span class="sub-num">2.5</span>四个动作 · 全景图</h3>
+
+        <!-- SVG 全景图 -->
+        <div class="svg-wrap">
+          <div class="svg-cap">指令驱动 Skill 进化引擎 · 闭环全景</div>
+          <svg viewBox="0 0 880 460" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="evoArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c25e34"/>
+              </marker>
+              <marker id="evoArrDark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#3d3d3d"/>
+              </marker>
+              <linearGradient id="g0" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#1a1a1a"/>
+                <stop offset="100%" stop-color="#3d3d3d"/>
+              </linearGradient>
+            </defs>
+
+            <!-- 0 · 分析师说出指令 (人) -->
+            <rect x="30" y="60" width="170" height="100" rx="14" fill="url(#g0)"/>
+            <!-- small avatar top-left, decorative -->
+            <circle cx="50" cy="80" r="7" fill="#c25e34"/>
+            <path d="M 43 94 Q 50 86 57 94 L 57 100 L 43 100 Z" fill="#c25e34"/>
+            <!-- centered text stack -->
+            <text x="115" y="80" text-anchor="middle" fill="#ff9b6b" style="font-size:10px;letter-spacing:2px;font-weight:700">STAGE 0</text>
+            <text x="115" y="103" text-anchor="middle" fill="#fff" style="font-size:13px;font-weight:700">分析师说出一句</text>
+            <text x="115" y="122" text-anchor="middle" fill="#fff" style="font-size:13px;font-weight:700">修改指令</text>
+            <text x="115" y="146" text-anchor="middle" fill="#bdbdbd" style="font-size:9.5px;font-style:italic">"承付义务太浅,拆期限分布"</text>
+
+            <!-- ① 记录指令 (Sensor 蓝) -->
+            <g class="evo-step" data-target="ch2-21" tabindex="0" role="button" aria-label="动作 ① 记录指令 · 跳转到 §2.1">
+            <rect x="260" y="60" width="170" height="100" rx="14" fill="#fff" stroke="#1f4ea0" stroke-width="2.5"/>
+            <rect x="260" y="60" width="170" height="26" rx="14" fill="#1f4ea0"/>
+            <rect x="260" y="73" width="170" height="13" fill="#1f4ea0"/>
+            <text x="345" y="78" text-anchor="middle" fill="#fff" style="font-size:11px;letter-spacing:1.5px;font-weight:700">① 记录指令 · SENSOR</text>
+            <text x="345" y="110" text-anchor="middle" fill="#1a1a1a" style="font-size:13px;font-weight:700">log_instruction()</text>
+            <text x="345" y="128" text-anchor="middle" fill="#3d3d3d" style="font-size:10px">捕获原话 + target_section</text>
+            <text x="345" y="145" text-anchor="middle" fill="#3d3d3d" style="font-size:10px">宁可多记 · 不可漏记</text>
+            <rect class="evo-hit" x="260" y="60" width="170" height="100" rx="14"/>
+            </g>
+
+            <!-- ② 入库 (Context 紫) -->
+            <g class="evo-step" data-target="ch2-22" tabindex="0" role="button" aria-label="动作 ② 入库 · 跳转到 §2.2">
+            <rect x="490" y="60" width="170" height="100" rx="14" fill="#fff" stroke="#5b3aa0" stroke-width="2.5"/>
+            <rect x="490" y="60" width="170" height="26" rx="14" fill="#5b3aa0"/>
+            <rect x="490" y="73" width="170" height="13" fill="#5b3aa0"/>
+            <text x="575" y="78" text-anchor="middle" fill="#fff" style="font-size:11px;letter-spacing:1.5px;font-weight:700">② 入库 · CONTEXT</text>
+            <text x="575" y="110" text-anchor="middle" fill="#1a1a1a" style="font-size:13px;font-weight:700">instructions 表</text>
+            <text x="575" y="128" text-anchor="middle" fill="#3d3d3d" style="font-size:10px">9 字段 · 一手 why 不需推断</text>
+            <text x="575" y="145" text-anchor="middle" fill="#3d3d3d" style="font-size:10px">永久可读 / 可追溯</text>
+            <rect class="evo-hit" x="490" y="60" width="170" height="100" rx="14"/>
+            </g>
+
+            <!-- DB icon -->
+            <ellipse cx="720" cy="100" rx="40" ry="10" fill="#5b3aa0" opacity="0.15"/>
+            <ellipse cx="720" cy="100" rx="40" ry="10" fill="none" stroke="#5b3aa0" stroke-width="1.5"/>
+            <path d="M 680 100 L 680 130" stroke="#5b3aa0" stroke-width="1.5" fill="none"/>
+            <path d="M 760 100 L 760 130" stroke="#5b3aa0" stroke-width="1.5" fill="none"/>
+            <ellipse cx="720" cy="130" rx="40" ry="10" fill="#ede8f7" stroke="#5b3aa0" stroke-width="1.5"/>
+            <text x="720" y="155" text-anchor="middle" style="font-size:10px;fill:#5b3aa0;font-weight:700">SQLite</text>
+
+            <!-- arrows row 1 -->
+            <path d="M 200 110 L 258 110" stroke="#3d3d3d" stroke-width="2.5" fill="none" marker-end="url(#evoArrDark)"/>
+            <path d="M 430 110 L 488 110" stroke="#3d3d3d" stroke-width="2.5" fill="none" marker-end="url(#evoArrDark)"/>
+
+            <!-- 攒够 N 条 · 触发 -->
+            <text x="345" y="200" text-anchor="middle" style="font-size:10px;fill:#9b9b9b;letter-spacing:1px;font-weight:700">↓  攒够 N 条同类 / 每周触发  ↓</text>
+
+            <!-- ③ 反思器 (Learning 橙) -->
+            <g class="evo-step" data-target="ch2-23" tabindex="0" role="button" aria-label="动作 ③ 反思器 · 跳转到 §2.3">
+            <rect x="260" y="220" width="360" height="110" rx="14" fill="#f3e6dd" stroke="#c25e34" stroke-width="2.5"/>
+            <rect x="260" y="220" width="360" height="26" rx="14" fill="#c25e34"/>
+            <rect x="260" y="233" width="360" height="13" fill="#c25e34"/>
+            <text x="440" y="238" text-anchor="middle" fill="#fff" style="font-size:11px;letter-spacing:1.5px;font-weight:700">③ 反思器提炼 · LEARNING</text>
+            <text x="440" y="270" text-anchor="middle" fill="#1a1a1a" style="font-size:13px;font-weight:700">反思器 prompt → 找重复模式 (≥2 次)</text>
+            <text x="440" y="290" text-anchor="middle" fill="#3d3d3d" style="font-size:10.5px">读同类指令 → 抽象出"普遍判断" → 输出 skill 补丁 JSON</text>
+            <text x="440" y="310" text-anchor="middle" fill="#3d3d3d" style="font-size:10.5px;font-style:italic">忽略一次性特例 (避免被绑架) · 只蒸馏可复用的判断模板</text>
+            <rect class="evo-hit" x="260" y="220" width="360" height="110" rx="14"/>
+            </g>
+
+            <!-- 流动线: instructions → 反思器 (累积) -->
+            <path d="M 720 165 Q 720 200 620 245" stroke="#5b3aa0" stroke-width="2" fill="none" stroke-dasharray="3 3" opacity="0.7"/>
+            <path d="M 345 165 Q 345 200 345 245" stroke="#5b3aa0" stroke-width="2" fill="none" stroke-dasharray="3 3" opacity="0.7"/>
+
+            <!-- ④ 验证后进化 (Gate 红 + 人审) -->
+            <g class="evo-step" data-target="ch2-24" tabindex="0" role="button" aria-label="动作 ④ 验证后进化 · 跳转到 §2.4">
+            <rect x="260" y="360" width="360" height="80" rx="14" fill="#fff" stroke="#aa3322" stroke-width="2.5"/>
+            <rect x="260" y="360" width="360" height="26" rx="14" fill="#aa3322"/>
+            <rect x="260" y="373" width="360" height="13" fill="#aa3322"/>
+            <text x="440" y="378" text-anchor="middle" fill="#fff" style="font-size:11px;letter-spacing:1.5px;font-weight:700">④ 验证后进化 · QUALITY GATE</text>
+            <text x="440" y="406" text-anchor="middle" fill="#1a1a1a" style="font-size:12px;font-weight:700">留出集自动打分 ≥ 基线 → ✓ 人工一键确认上线</text>
+            <text x="440" y="425" text-anchor="middle" fill="#aa3322" style="font-size:10.5px;font-style:italic">"自我改进只在结果可验证处有效" · 人在闭环</text>
+            <rect class="evo-hit" x="260" y="360" width="360" height="80" rx="14"/>
+            </g>
+
+            <!-- arrow ③ → ④ -->
+            <path d="M 440 330 L 440 358" stroke="#3d3d3d" stroke-width="2.5" fill="none" marker-end="url(#evoArrDark)"/>
+
+            <!-- skill v(n+1) 上线 -->
+            <rect x="680" y="375" width="180" height="50" rx="10" fill="#1f7a4d" stroke="#155538" stroke-width="2"/>
+            <text x="770" y="397" text-anchor="middle" fill="#fff" style="font-size:13px;font-weight:700">skill v(n+1) 上线</text>
+            <text x="770" y="414" text-anchor="middle" fill="#cfe3d8" style="font-size:10px">下次 agent 第一次产出就带上判断</text>
+
+            <path d="M 620 400 L 678 400" stroke="#1f7a4d" stroke-width="2.5" fill="none" marker-end="url(#evoArrDark)"/>
+
+            <!-- 闭环回到 Stage 0 (左侧大圆弧) -->
+            <path d="M 770 375 Q 770 200 200 110" stroke="#c25e34" stroke-width="2.5" fill="none" stroke-dasharray="6 4" marker-end="url(#evoArr)" class="flow-anim"/>
+            <text x="800" y="260" style="font-size:10px;fill:#c25e34;font-weight:700">下一次循环</text>
+            <text x="800" y="276" style="font-size:10px;fill:#c25e34;font-weight:700">起点更高</text>
+          </svg>
+
+          <div class="svg-legend">
+            <span class="lg-item"><span class="lg-dot d-sensor"></span>记录</span>
+            <span class="lg-item"><span class="lg-dot d-ctx"></span>入库</span>
+            <span class="lg-item"><span class="lg-dot d-learn"></span>反思</span>
+            <span class="lg-item"><span class="lg-dot d-gate"></span>验证</span>
+            <span class="lg-item"><span class="lg-dot d-policy"></span>上线</span>
+          </div>
+        </div>
+
+        <div class="callout success lbl-strong" data-lbl="对比上一版">
+          没有归因 agent、没有 diff 捕获、没有混合确认、没有 severity 推断。<strong>指令是一手信号，直接用。</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ====================================== -->
+  <!-- TAB 3 · 组织飞轮                        -->
+  <!-- ====================================== -->
+  <div class="main-pane" data-mpane="ch3">
+    <div class="wrap">
+
+      <div class="ch-head">
+        <span class="eyebrow">PART 03 · 两者咬合</span>
         <h2>组织级飞轮 · 从一次会议纪要到组织智能</h2>
         <p class="lede">
-          五层循环不是抽象的概念框架，它在投研调研业务上有一套具体的咬合方式。
-          下面分五步走读：先看 Sensor 层"双入口"的扩展，再看 DRI 在 loop 中的三个具体落点，给出完整映射表，然后用一张飞轮把循环跑给你看，最后回答"为什么值得投入"。
+          把前两章合并起来看，会发现一件让人愉悦的事 ——
+          指令驱动 Skill 进化引擎不是"五层循环"之外的另一个东西，它就是五层循环在投研调研业务上的实例化。
+          下面分五步咬合：先看 Sensor 层"双入口"的扩展，再看 DRI 在 loop 中的三个具体落点，给出完整映射表，然后用一张飞轮把循环跑给你看，最后回答"为什么值得投入"。
         </p>
       </div>
 
       <nav class="ch3-rail" id="ch3Rail" aria-label="组织飞轮 · 五段跳转">
         <span class="ch3-rail-label">本章导航</span>
-        <a href="#ch3-21"><span class="rail-num">2.1</span>Sensor 双入口</a>
-        <a href="#ch3-22"><span class="rail-num">2.2</span>DRI 三动作</a>
-        <a href="#ch3-23"><span class="rail-num">2.3</span>五层映射表</a>
-        <a href="#ch3-24"><span class="rail-num">2.4</span>飞轮闭环</a>
-        <a href="#ch3-25"><span class="rail-num">2.5</span>为什么值得投入</a>
+        <a href="#ch3-31"><span class="rail-num">3.1</span>Sensor 双入口</a>
+        <a href="#ch3-32"><span class="rail-num">3.2</span>DRI 三动作</a>
+        <a href="#ch3-33"><span class="rail-num">3.3</span>五层映射表</a>
+        <a href="#ch3-34"><span class="rail-num">3.4</span>飞轮闭环</a>
+        <a href="#ch3-35"><span class="rail-num">3.5</span>为什么值得投入</a>
       </nav>
 
       <!-- 3.1 Sensor 双入口 -->
-      <div class="sec-block" id="ch3-21">
-        <h3><span class="sub-num blue">2.1</span>Sensor 双入口 · 任务从哪来 + 修正信号怎么进</h3>
+      <div class="sec-block" id="ch3-31">
+        <h3><span class="sub-num blue">3.1</span>Sensor 双入口 · 任务从哪来 + 修正信号怎么进</h3>
 
         <div class="prose">
           <p>第 1 章里 Sensor 层只是泛指"循环的输入感官"。落到 SpaceX 案例上，要追问一个更具体的问题：<strong>任务"做 SpaceX 调研"本身，是怎么进入循环的？</strong>如果这个信号没被任何传感器接住，那么 agent 跑出来的产出就回答不了"我是为谁、为什么时间点、按谁的判断口径在做这件事"——这是 Bttr 那句"没被记录的就是没发生过"的最大盲点。</p>
@@ -2089,8 +2557,8 @@
       </div>
 
       <!-- 3.2 DRI in the loop -->
-      <div class="sec-block" id="ch3-22">
-        <h3><span class="sub-num accent">2.2</span>DRI in the loop · 人不在中间，人在边缘的三个具体位置</h3>
+      <div class="sec-block" id="ch3-32">
+        <h3><span class="sub-num accent">3.2</span>DRI in the loop · 人不在中间，人在边缘的三个具体位置</h3>
 
         <div class="prose">
           <p>文档此前用"分析师"这个词，把任务接收人、修改指令下达人、上线一键确认人三个职能压在了一起。要让"人坐在边缘"这件事可操作，就得用 <strong>DRI</strong>（Directly Responsible Individual）这个词，把人在循环里的三个动作显式拆开：</p>
@@ -2142,54 +2610,60 @@
         </div>
 
         <div class="prose">
-          <p>DRI 的工作不是把每一份调研都亲手改完，而是在这三个边缘位置上做循环做不了的事：在会议上做要不要做、谁来做的判断；在产出上把判断说出来；在 skill 上线前拍板放不放出去。</p>
+          <p>DRI 的工作不是把每一份调研都亲手改完，而是在这三个边缘位置上做循环做不了的事：在会议上做要不要做、谁来做的判断；在产出上把判断说出来；在 skill 进化前拍板上线与否。</p>
         </div>
       </div>
 
       <!-- 3.3 五层映射表（升级版） -->
-      <div class="sec-block" id="ch3-23">
-        <h3><span class="sub-num">2.3</span>五层映射表 · 升级版</h3>
+      <div class="sec-block" id="ch3-33">
+        <h3><span class="sub-num">3.3</span>五层映射表 · 升级版</h3>
 
         <table class="map-table compact">
           <thead>
-            <tr><th>Bttr 五层（+ 中心）</th><th>SpaceX 案例里的具体落点</th></tr>
+            <tr><th>Bttr 五层（+ 中心）</th><th>Skill 进化引擎里的对应物</th><th>在 SpaceX 案例里具体表现</th></tr>
           </thead>
           <tbody>
             <tr>
               <td><span class="tag t-sensor">SENSOR</span>感知层</td>
-              <td>投委会纪要点名张三为 DRI 进 <code>tasks</code> 表；张三那句"承付义务太浅"被 <code>log_instruction()</code> 接住 —— 任务入口和修正信号入口同时打开</td>
+              <td>①a 会议纪要落 <code>tasks</code> 表（任务发起入口）<br>①b <code>log_instruction()</code>（修正信号入口）</td>
+              <td>投委会纪要点名张三为 DRI 进 <code>tasks</code> 表；张三那句"承付义务太浅"被 <code>log_instruction()</code> 接住</td>
             </tr>
             <tr>
               <td><span class="tag t-policy">POLICY</span>策略层</td>
-              <td>DRI = 张三；agent 可重写段落、不可改估值结论；skill 上线必须 DRI 拍板 —— 自治边界由 policy 而非 prompt 决定</td>
+              <td>DRI 权限边界：谁可发起任务、谁可下修改指令、谁可一键确认上线；什么算修改指令的判断规则</td>
+              <td>DRI = 张三；agent 可重写段落、不可改估值结论；skill 上线必须 DRI 拍板</td>
             </tr>
             <tr>
               <td><span class="tag t-tool">TOOL</span>工具层</td>
-              <td><code>log_meeting()</code> / <code>log_instruction()</code> / SQLite 写入 / 留出集打分 —— 一组确定性 API，agent 不靠魔法做事</td>
+              <td><code>log_meeting()</code> / <code>log_instruction()</code> / SQLite 写入 / 反思器 prompt / 留出集打分</td>
+              <td>一组确定性 API，agent 不靠魔法做事</td>
             </tr>
             <tr>
               <td><span class="tag t-gate">GATE</span>质量闸门</td>
-              <td>留出集 + LLM-as-judge + DRI 一键确认；v3→v4 候选打分 0.78→0.85；DRI 2026-05-26 拍板上线</td>
+              <td>留出集 + LLM-as-judge + DRI 一键确认</td>
+              <td>v3→v4 候选打分 0.78→0.85；DRI 2026-05-26 拍板上线</td>
             </tr>
             <tr>
               <td><span class="tag t-learn">LEARN</span>学习机制</td>
-              <td>一周内 6 条同类指令被反思器归纳为"大额数字必拆结构"规则，写进 skill 补丁；下一轮起手就是改过的版本</td>
+              <td>动作 ③ 反思器 + 动作 ④ 进化</td>
+              <td>一周内 6 条同类指令被归纳为"大额数字必拆结构"规则</td>
             </tr>
             <tr>
               <td><span class="tag t-ctx">CTX</span>公司语境</td>
-              <td>任务来源（投委会纪要）、DRI 判断（每一句修改指令）、skill 版本轨迹全部永久可读、可追溯、可回滚</td>
+              <td><code>tasks</code> 表 + <code>instructions</code> 表 + <code>skill_versions</code> 表 + skill 内容本身</td>
+              <td>任务来源（投委会纪要）、DRI 判断（每一句修改指令）、skill 进化轨迹，全部永久可读、可追溯、可回滚</td>
             </tr>
           </tbody>
         </table>
 
         <div class="prose">
-          <p>这张表的价值不在于映射本身，而在于它告诉你：<strong>SpaceX case 不是给映射表举的一个例子，它就是这张表本身 —— 一次完整的循环跑动。</strong> 五层不是抽象框架，是一组可以一格一格指认到代码、表、人的具体落点。</p>
+          <p>这张表的价值不在于映射本身，而在于它告诉你：<strong>"做一个能让 skill 进化的系统"和"做一个 AI Native 组织"，在工程上是同一件事的不同切片。</strong> SpaceX case 不是给映射表举的一个例子，它就是这张表本身——一次完整的循环跑动。</p>
         </div>
       </div>
 
       <!-- 3.4 飞轮 -->
-      <div class="sec-block" id="ch3-24">
-        <h3><span class="sub-num accent">2.4</span>飞轮 · 从一次会议纪要到组织级智能</h3>
+      <div class="sec-block" id="ch3-34">
+        <h3><span class="sub-num accent">3.4</span>飞轮 · 从一次会议纪要到组织级智能</h3>
 
         <div class="prose">
           <p>这是两者咬合后真正的核心 —— <strong>一个组织级的飞轮</strong>。注意它的起点不是"分析师拍脑袋开干"，而是<strong>会议纪要点名 DRI</strong>：</p>
@@ -2345,8 +2819,8 @@
       </div>
 
       <!-- 3.5 为什么投入 -->
-      <div class="sec-block" id="ch3-25">
-        <h3><span class="sub-num">2.5</span>为什么这件事值得投入</h3>
+      <div class="sec-block" id="ch3-35">
+        <h3><span class="sub-num">3.5</span>为什么这件事值得投入</h3>
 
         <div class="prose">
           <p>回到一开始的灵魂拷问 —— 为什么我应该把自己的工作流改造成这个形态？三个理由，按重要性递增：</p>
@@ -2370,7 +2844,7 @@
           <div class="wy-row">
             <span class="wy-num"></span>
             <div>
-              <p class="wy-headline">五层循环 + 组织飞轮合起来，把你蒸馏成一个永远在岗的智能体。</p>
+              <p class="wy-headline">五层循环 + 进化引擎合起来，把你蒸馏成一个永远在岗的智能体。</p>
               <p class="wy-body">Bttr 那句被反复引用的话很合用：<em>"Senior people will increasingly act like fund partners. Outcome over output."</em> 你不需要再亲手把每一份调研改完，你只需要让你说过的每一句话都被记住、被沉淀、被复用。剩下的让循环去跑。而你，坐在循环的边缘，做循环做不了的事 —— 新情境下的判断、和客户的谈判、对一份报告的品味判断、深夜里关于公司方向的犹豫。</p>
             </div>
           </div>
@@ -2398,7 +2872,7 @@
         <span class="eyebrow">CASE STUDY · SPACEX S-1</span>
         <h2>SpaceX 招股书调研 · 一次完整循环走读</h2>
         <p class="lede">
-          用 SpaceX S-1 调研当作贯穿案例，把<strong>五层循环 + 组织飞轮</strong>完整跑一遍：
+          用 SpaceX S-1 调研当作贯穿案例，把"指令驱动 Skill 进化引擎"完整跑一遍：
           <br><br>
           <strong>STAGE 0</strong> 投委会纪要进入 Sensor ①a，DRI 被点名接住任务；
           <strong>第一轮</strong>用 skill v3，DRI 下达一句修改指令（Sensor ①b）；
@@ -2967,7 +3441,7 @@
         <table class="gen-table">
           <thead><tr><th>阶段</th><th>对应 MVP 方案章节</th></tr></thead>
           <tbody>
-            <tr><td>STAGE 0 投委会纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §2.1 Sensor 双入口 · §2.2 DRI 三落点</td></tr>
+            <tr><td>STAGE 0 投委会纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §3.1 Sensor 双入口 · §3.2 DRI 三落点</td></tr>
             <tr><td>STAGE 1 DRI 接任务 · 查 skill 版本</td><td>§1 任务起点 · §3 skill 版本绑定</td></tr>
             <tr><td>STAGE 2 v3 第一次产出</td><td>§5 贯穿实例 · 第一行</td></tr>
             <tr><td>STAGE 3 DRI ② 下达修改指令</td><td>§5 贯穿实例 · 第二行（保留原话）</td></tr>
@@ -2999,8 +3473,9 @@
 </section>
 
 <footer>
-  AI Native · 五层循环 × 组织飞轮 · 完整分享版 · SpaceX S-1 案例（2026-05-20 · 提交日）<br>
-  底层思想源自 <a href="https://www.ycombinator.com/library/OX-the-playbook-for-building-an-ai-native-company" target="_blank">YC · Diana · The Playbook for Building an AI Native Company</a> · 五层切分由 <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">Bttr · Burn Tokens, Not Headcount</a> 框架化
+  AI Native × Skill 进化引擎 · 完整分享版 · SpaceX S-1 案例（2026-05-20 · 提交日）<br>
+  五层循环源自 <a href="https://www.makebttr.com/insights/burn-tokens-not-headcount" target="_blank">Bttr · Burn Tokens, Not Headcount</a> ·
+  指令进化引擎源自《指令驱动 Skill 进化 · MVP 设计方案》
 </footer>
 
 <script>
@@ -3234,7 +3709,46 @@
     }
   }
 
-  /* ===== CH02 rail scroll-spy (sections kept ch3- id prefix for stability) ===== */
+  /* ===== CH02 rail scroll-spy ===== */
+  var ch2Secs = Array.prototype.slice.call(document.querySelectorAll('.sec-block[id^="ch2-"]'));
+  var ch2Links = Array.prototype.slice.call(document.querySelectorAll('.ch2-rail a[href^="#ch2-"]'));
+  if(ch2Secs.length && ch2Links.length && 'IntersectionObserver' in window){
+    var ch2Vis = {};
+    var ch2Spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var id = e.target.id;
+        if(e.isIntersecting){ ch2Vis[id] = e.intersectionRatio; }
+        else { delete ch2Vis[id]; }
+      });
+      var top = null, topRatio = -1;
+      Object.keys(ch2Vis).forEach(function(k){
+        if(ch2Vis[k] > topRatio){ topRatio = ch2Vis[k]; top = k; }
+      });
+      var hash = top ? '#' + top : null;
+      ch2Links.forEach(function(a){ a.classList.toggle('is-current', a.getAttribute('href') === hash); });
+    }, { rootMargin: '-22% 0px -55% 0px', threshold: [0, 0.2, 0.5, 0.8, 1] });
+    ch2Secs.forEach(function(s){ ch2Spy.observe(s); });
+  }
+
+  /* ===== §2.5 panorama: clickable action steps ===== */
+  Array.prototype.slice.call(document.querySelectorAll('.evo-step[data-target]')).forEach(function(g){
+    function go(){
+      var id = g.getAttribute('data-target');
+      var t = document.getElementById(id);
+      if(!t) return;
+      g.classList.add('is-flash');
+      setTimeout(function(){ g.classList.remove('is-flash'); }, 1400);
+      t.scrollIntoView({behavior:'smooth',block:'start'});
+      t.classList.add('is-flash');
+      setTimeout(function(){ t.classList.remove('is-flash'); }, 1400);
+    }
+    g.addEventListener('click', go);
+    g.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); }
+    });
+  });
+
+  /* ===== CH03 rail scroll-spy ===== */
   var ch3Secs = Array.prototype.slice.call(document.querySelectorAll('.sec-block[id^="ch3-"]'));
   var ch3Links = Array.prototype.slice.call(document.querySelectorAll('.ch3-rail a[href^="#ch3-"]'));
   if(ch3Secs.length && ch3Links.length && 'IntersectionObserver' in window){
