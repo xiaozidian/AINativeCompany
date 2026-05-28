@@ -428,7 +428,9 @@
     font-family:"SF Mono",monospace;font-size:11px;font-weight:700;color:var(--ink-4);letter-spacing:1px;
     width:64px;flex-shrink:0;
   }
-  .dri-steps .ds-row .ds-num::before{content:"DRI · " counter(dri,decimal-leading-zero)}
+  .dri-steps .ds-row .ds-num{display:inline-flex;align-items:center;gap:7px;width:auto;min-width:100px;padding:5px 11px;border-radius:99px;background:var(--accent-soft);color:var(--accent-deeper)}
+  .dri-steps .ds-row .ds-num::before{content:"DRI 落点";font-size:10px;letter-spacing:.6px}
+  .dri-steps .ds-row .ds-num::after{content:counter(dri);font-family:"SF Mono",monospace;font-size:13px;font-weight:800;color:var(--accent)}
   .dri-steps .ds-row .ds-action{font-size:16px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:4px}
   .dri-steps .ds-row .ds-where{font-size:12px;color:var(--ink-3);line-height:1.5}
   .dri-steps .ds-row .ds-where strong{color:var(--ink-2);font-weight:600}
@@ -464,18 +466,65 @@
   .fw-tools button.is-on{background:var(--accent);color:#fff;border-color:var(--accent-deeper)}
   .fw-tools .fw-hint{margin-left:auto;font-size:11.5px;color:var(--ink-4);font-style:italic}
   .fw-tools .fw-hint::before{content:"↳ ";color:var(--ink-4)}
+  .fw-tools .fw-tour-btn{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--accent);color:var(--accent-deeper);background:var(--bg-card);
+  }
+  .fw-tools .fw-tour-btn:hover{background:var(--accent-soft);color:var(--accent-deeper)}
+  .fw-tools .fw-tour-btn .fw-tour-icon{
+    display:inline-block;width:0;height:0;
+    border-top:5px solid transparent;border-bottom:5px solid transparent;
+    border-left:8px solid currentColor;
+    transition:transform .25s;
+  }
+  .fw-tools .fw-tour-btn.is-running{background:var(--accent);color:#fff;border-color:var(--accent-deeper)}
+  .fw-tools .fw-tour-btn.is-running .fw-tour-icon{
+    border-left:none;border-top:none;border-bottom:none;
+    width:8px;height:8px;background:#fff;border-radius:1px;
+  }
   @media (max-width:880px){.fw-tools .fw-hint{display:none}}
+
+  /* Slope-up flash pill — appears at lap completion */
+  .fw-slope-flash{
+    position:absolute;top:8px;left:50%;transform:translateX(-50%) translateY(-6px);
+    display:inline-flex;align-items:center;gap:8px;
+    padding:8px 16px;border-radius:99px;
+    background:var(--accent);color:#fff;
+    font-size:12px;font-weight:700;letter-spacing:.6px;
+    box-shadow:0 6px 20px rgba(154,72,36,.32);
+    opacity:0;pointer-events:none;
+    transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);
+    z-index:5;
+  }
+  .fw-slope-flash::before{
+    content:"↑";font-size:14px;font-weight:800;
+  }
+  .fw-slope-flash.is-show{opacity:1;transform:translateX(-50%) translateY(0)}
 
   .fw-board{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
   @media (max-width:980px){.fw-board{grid-template-columns:1fr}}
   .fw-svg-wrap{position:relative}
   .fw-svg-wrap svg{display:block;width:100%;height:auto;max-width:880px;margin:0 auto}
+  @media (max-width:640px){
+    .fw-svg-wrap{overflow-x:auto;margin:0 -16px;padding:0 16px;-webkit-overflow-scrolling:touch}
+    .fw-svg-wrap::-webkit-scrollbar{height:3px}
+    .fw-svg-wrap::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:99px}
+    .fw-svg-wrap svg{min-width:580px}
+    .fw-svg-wrap::after{content:"← 横向滑动查看完整闭环 →";display:block;text-align:center;font-size:10px;letter-spacing:.5px;color:var(--ink-4);margin-top:6px;font-style:italic}
+  }
   .fw-svg-wrap svg .fw-station{cursor:pointer;transition:opacity .35s cubic-bezier(.16,1,.3,1),transform .35s cubic-bezier(.16,1,.3,1);transform-box:fill-box;transform-origin:center}
   .fw-svg-wrap svg .fw-station circle.fw-hit{fill:transparent;stroke:transparent}
   .fw-svg-wrap svg .fw-station:hover{transform:scale(1.04)}
   .fw-svg-wrap svg .fw-arc{transition:opacity .35s,stroke-width .25s}
-  .fw-svg-wrap[data-mode="dri"] svg .fw-station:not([data-dri="1"]){opacity:.18}
-  .fw-svg-wrap[data-mode="dri"] svg .fw-arc{opacity:.22}
+  .fw-svg-wrap[data-mode="dri"] svg .fw-station:not([data-dri="1"]){opacity:.10}
+  .fw-svg-wrap[data-mode="dri"] svg .fw-arc{opacity:.18}
+  .fw-svg-wrap[data-mode="dri"] svg .fw-station[data-dri="1"] circle:first-of-type{
+    animation:fw-dri-pulse 2.4s cubic-bezier(.4,0,.4,1) infinite;
+  }
+  @keyframes fw-dri-pulse{
+    0%,100%{stroke-width:2}
+    50%{stroke-width:5}
+  }
   .fw-svg-wrap[data-active] svg .fw-station:not(.is-active){opacity:.42}
   .fw-svg-wrap svg .fw-station.is-active{transform:scale(1.08)}
   .fw-svg-wrap svg .fw-station.is-active circle:first-of-type{stroke-width:3.5}
@@ -2214,12 +2263,17 @@
           <span class="fw-tools-label">视图</span>
           <button type="button" data-fw-mode="all" class="is-on">完整闭环 · 8 站</button>
           <button type="button" data-fw-mode="dri">只看 DRI 三落点</button>
+          <button type="button" id="fwTourBtn" class="fw-tour-btn" aria-label="自动巡演飞轮一圈">
+            <span class="fw-tour-icon" aria-hidden="true"></span>
+            <span class="fw-tour-label">自动巡演一圈</span>
+          </button>
           <span class="fw-hint">点任意节点 · 右侧出现详情</span>
         </div>
 
         <div class="svg-cap">组织级飞轮 · 8 节点闭环 · DRI 在 3 个边缘位置出场 · 斜率每跑一圈变陡</div>
         <div class="fw-board">
           <div class="fw-svg-wrap" id="fwSvgWrap">
+            <div class="fw-slope-flash" id="fwSlopeFlash" aria-hidden="true">下一圈起点抬升</div>
             <svg viewBox="0 0 880 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="组织级飞轮 8 节点闭环">
               <defs>
                 <marker id="fwArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
@@ -2235,10 +2289,10 @@
               <circle cx="440" cy="320" r="240" fill="none" stroke="#e6e3dc" stroke-width="1" stroke-dasharray="2 4"/>
               <circle cx="440" cy="320" r="180" fill="none" stroke="#e6e3dc" stroke-width="0.8"/>
 
-              <text x="440" y="305" text-anchor="middle" style="font-size:13px;font-weight:700;fill:#1a1a1a;letter-spacing:1px">FLYWHEEL</text>
-              <text x="440" y="325" text-anchor="middle" style="font-size:11px;fill:#6b6b6b">会议纪要触发 · 一句话进化 · 下一次起点更高</text>
-              <text x="440" y="345" text-anchor="middle" style="font-size:10px;font-style:italic;fill:#c25e34">slope, not level</text>
-              <text x="440" y="368" text-anchor="middle" style="font-size:9px;letter-spacing:1px;fill:#9b9b9b">水平 = 这一圈在做事 · 斜率 = 下一圈更聪明</text>
+              <text x="440" y="306" text-anchor="middle" style="font-size:14px;font-weight:800;fill:#1a1a1a;letter-spacing:2px">FLYWHEEL</text>
+              <text x="440" y="332" text-anchor="middle" style="font-size:11.5px;font-style:italic;fill:#c25e34;letter-spacing:.8px">slope, not level</text>
+              <line x1="395" y1="346" x2="485" y2="346" stroke="#e6e3dc" stroke-width="1"/>
+              <text x="440" y="364" text-anchor="middle" style="font-size:10px;letter-spacing:.4px;fill:#9b9b9b">每跑一圈 · 下一圈起点更高</text>
 
               <!-- 8 stations on circle r=240 around (440,320), every 45° clockwise from -90° (top) -->
               <path class="fw-arc" d="M 484 105 A 240 240 0 0 1 580 110" stroke="#3d3d3d" stroke-width="2" fill="none" marker-end="url(#fwArr)"/>
@@ -3326,8 +3380,66 @@
         fwModeBtns.forEach(function(x){ x.classList.toggle('is-on', x === b); });
         if(mode === 'all'){ fwWrap.removeAttribute('data-mode'); }
         else { fwWrap.setAttribute('data-mode', mode); }
+        if(tourTimer){ stopTour(); }
       });
     });
+
+    /* Auto-activate N1 the first time §2.4 enters the viewport */
+    var firstStation = stations[0];
+    var seen = false;
+    if('IntersectionObserver' in window && firstStation){
+      var fwSpy = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && !seen){
+            seen = true;
+            activateStation(firstStation);
+            fwSpy.disconnect();
+          }
+        });
+      }, {threshold:0.35});
+      fwSpy.observe(fwWrap);
+    }
+
+    /* Auto-tour: walk N1→N8 with 1.6s dwell, flash slope cue at lap end */
+    var tourBtn = document.getElementById('fwTourBtn');
+    var slopeFlash = document.getElementById('fwSlopeFlash');
+    var tourTimer = null;
+    var tourIdx = 0;
+    function stopTour(){
+      if(tourTimer){ clearTimeout(tourTimer); tourTimer = null; }
+      if(tourBtn){
+        tourBtn.classList.remove('is-running');
+        tourBtn.querySelector('.fw-tour-label').textContent = '自动巡演一圈';
+      }
+    }
+    function flashSlope(){
+      if(!slopeFlash) return;
+      slopeFlash.classList.add('is-show');
+      setTimeout(function(){ slopeFlash.classList.remove('is-show'); }, 1800);
+    }
+    function tourStep(){
+      if(tourIdx >= stations.length){
+        stopTour();
+        flashSlope();
+        return;
+      }
+      activateStation(stations[tourIdx]);
+      tourIdx++;
+      tourTimer = setTimeout(tourStep, 1600);
+    }
+    if(tourBtn){
+      tourBtn.addEventListener('click', function(){
+        if(tourTimer){ stopTour(); return; }
+        if(fwWrap.getAttribute('data-mode') === 'dri'){
+          fwModeBtns.forEach(function(x){ x.classList.toggle('is-on', x.getAttribute('data-fw-mode') === 'all'); });
+          fwWrap.removeAttribute('data-mode');
+        }
+        tourIdx = 0;
+        tourBtn.classList.add('is-running');
+        tourBtn.querySelector('.fw-tour-label').textContent = '巡演中 · 点此停止';
+        tourStep();
+      });
+    }
   }
 
   /* ===== top reading-progress bar ===== */
