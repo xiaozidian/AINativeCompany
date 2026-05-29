@@ -2128,10 +2128,10 @@
             </div>
             <h4 class="de-title">任务发起信号 · 这一圈为什么跑</h4>
             <dl>
-              <dt>信号源</dt><dd>投委会会议纪要 / 客户邮件 / Slack @ / IC memo 排期</dd>
+              <dt>信号源</dt><dd>公司会议纪要 / 客户邮件 / Slack @ / 项目备忘排期</dd>
               <dt>落库</dt><dd><code>tasks</code> 新增一行：task_id, source = meeting_minutes, assigned_dri, deadline, focus_points</dd>
             </dl>
-            <div class="de-quote">"2026-05-20 投委会决议：S-1 提交后第二日启动 SpaceX 调研，DRI = 张三，T+5 出初稿，重点关注承付义务与频谱收购。"</div>
+            <div class="de-quote">"2026-05-20 公司会议决议：S-1 提交后第二日启动 SpaceX 调研，DRI = 张三，T+5 出初稿，重点关注承付义务与频谱收购。"</div>
           </div>
           <div class="de-card" data-flag="exist">
             <div class="de-head">
@@ -2169,7 +2169,7 @@
             </div>
             <div class="ds-case">
               <span class="ds-case-lbl">SpaceX CASE</span>
-              投委会指定张三为 SpaceX S-1 调研 DRI，T+5 出初稿。
+              公司会议纪要指定张三为 SpaceX S-1 调研 DRI，T+5 出初稿。
             </div>
           </div>
           <div class="ds-row">
@@ -2221,7 +2221,7 @@
           <tbody>
             <tr>
               <td><span class="tag t-sensor">SENSOR</span>感知层</td>
-              <td>投委会纪要点名张三为 DRI 进 <code>tasks</code> 表；张三那句"承付义务太浅"被 <code>log_instruction()</code> 接住 —— 任务入口和修正信号入口同时打开</td>
+              <td>公司会议纪要点名张三为 DRI 进 <code>tasks</code> 表；张三那句"承付义务太浅"被 <code>log_instruction()</code> 接住 —— 任务入口和修正信号入口同时打开</td>
             </tr>
             <tr>
               <td><span class="tag t-policy">POLICY</span>策略层</td>
@@ -2241,7 +2241,7 @@
             </tr>
             <tr>
               <td><span class="tag t-ctx">CTX</span>公司语境</td>
-              <td>任务来源（投委会纪要）、DRI 判断（每一句修改指令）、skill 版本轨迹全部永久可读、可追溯、可回滚</td>
+              <td>任务来源（公司会议纪要）、DRI 判断（每一句修改指令）、skill 版本轨迹全部永久可读、可追溯、可回滚</td>
             </tr>
           </tbody>
         </table>
@@ -2304,10 +2304,10 @@
               <path class="fw-arc" d="M 202 280 A 240 240 0 0 1 226 178" stroke="#3d3d3d" stroke-width="2" fill="none" marker-end="url(#fwArr)"/>
               <path class="fw-arc flow-anim" d="M 300 110 A 240 240 0 0 1 396 105" stroke="#c25e34" stroke-width="3" fill="none" marker-end="url(#fwArr)"/>
 
-              <g class="fw-station" data-stage="N1" data-tone="sensor" data-dri="1" tabindex="0" role="button" aria-label="STAGE 0 投委会纪要 点名 DRI">
+              <g class="fw-station" data-stage="N1" data-tone="sensor" data-dri="1" tabindex="0" role="button" aria-label="STAGE 0 公司会议纪要 点名 DRI">
                 <circle cx="440" cy="80" r="52" fill="#1f4ea0" stroke="#163a78" stroke-width="2"/>
                 <text x="440" y="68" text-anchor="middle" fill="#fff" style="font-size:9px;font-weight:700;letter-spacing:1px">STAGE 0 · SENSOR ①a</text>
-                <text x="440" y="86" text-anchor="middle" fill="#fff" style="font-size:11px;font-weight:700">投委会纪要</text>
+                <text x="440" y="86" text-anchor="middle" fill="#fff" style="font-size:11px;font-weight:700">会议纪要</text>
                 <text x="440" y="102" text-anchor="middle" fill="#fff" style="font-size:11px;font-weight:700">点名 DRI</text>
                 <circle cx="492" cy="48" r="14" fill="#c25e34" stroke="#fff" stroke-width="2"/>
                 <text x="492" y="52" text-anchor="middle" fill="#fff" style="font-size:10px;font-weight:700">DRI</text>
@@ -2469,7 +2469,7 @@
         <p class="lede">
           用 SpaceX S-1 调研当作贯穿案例，把<strong>五层循环 + 组织飞轮</strong>完整跑一遍：
           <br><br>
-          <strong>STAGE 0</strong> 投委会纪要进入 Sensor ①a，DRI 被点名接住任务；
+          <strong>STAGE 0</strong> 公司会议纪要进入 Sensor ①a，DRI 被点名接住任务；
           <strong>第一轮</strong>用 skill v3，DRI 下达一句修改指令（Sensor ①b）；
           <strong>一周后</strong>反思器从 6 条同类指令归纳出新规则；
           <strong>第二轮</strong>用 skill v4，agent 第一次产出就达到了上一轮的最终质量。
@@ -2495,7 +2495,7 @@
         <div class="stage-index" role="navigation" aria-label="阶段时间轴">
           <a class="si-cell has-dri" data-stage="0" data-layer="sensor" href="#case-stage-0">
             <div class="si-num">STAGE 0</div>
-            <div class="si-title">投委会纪要</div>
+            <div class="si-title">会议纪要</div>
             <div class="si-tag t-sensor">Sensor ①a</div>
             <div class="si-dri">DRI ①</div>
           </a>
@@ -2544,21 +2544,21 @@
         </div>
       </div>
 
-      <!-- 阶段 0 · 投委会纪要 -->
+      <!-- 阶段 0 · 公司会议纪要 -->
       <div class="stage" id="case-stage-0" data-tone="info" data-layer="sensor">
         <div class="stage-head">
           <span class="stage-num">STAGE 0</span>
           <span class="stage-layer">Sensor ①a</span>
-          <span class="stage-title">投委会纪要 · 点名 DRI · 任务进入循环<span class="dri-badge">DRI ① · 接 Sensor</span></span>
+          <span class="stage-title">公司会议纪要 · 点名 DRI · 任务进入循环<span class="dri-badge">DRI ① · 接 Sensor</span></span>
           <span class="stage-meta">2026-05-20 · S-1 提交当晚</span>
         </div>
 
         <div class="prose">
-          <p>这一段是循环的真正起点：<strong>任务不是凭空出现的</strong>。投委会的一段会议纪要，被 Sensor ①a 收下，落进 <code>tasks</code> 表，并显式点名一位 DRI。</p>
+          <p>这一段是循环的真正起点：<strong>任务不是凭空出现的</strong>。一段公司会议纪要，被 Sensor ①a 收下，落进 <code>tasks</code> 表，并显式点名一位 DRI。</p>
         </div>
 
         <div class="instruction-box">
-          <div class="ib-head">投委会纪要 · 摘录</div>
+          <div class="ib-head">公司会议纪要 · 摘录</div>
           <div class="ib-body">
             "SpaceX 已于 2026-05-20 向 SEC 提交 S-1。请<strong>张三</strong>牵头，下周三（05-26）前出一份投资判断研究报告。<br>
             重点关注：① 收入分部结构与同业利润率；② 客户集中度与关联交易；③ <em>承付义务（capex / 发射台租约 / 长期供货）</em>对现金流的压制。"
@@ -3000,7 +3000,7 @@
           </ul>
           <p>把 DRI 的三个落点连起来回看一遍：</p>
           <ul>
-            <li><strong>① 接 Sensor</strong>（STAGE 0）：投委会纪要点名张三 → 任务进入循环；</li>
+            <li><strong>① 接 Sensor</strong>（STAGE 0）：公司会议纪要点名张三 → 任务进入循环；</li>
             <li><strong>② 下指令</strong>（STAGE 3）：一句"承付义务这段太浅" → 高质量训练信号沉淀；</li>
             <li><strong>③ 守闸门</strong>（STAGE 6）：留出集打分 + 一键确认 → skill v4 上线。</li>
           </ul>
@@ -3036,7 +3036,7 @@
         <table class="gen-table">
           <thead><tr><th>阶段</th><th>对应到五层循环 + 组织飞轮</th></tr></thead>
           <tbody>
-            <tr><td>STAGE 0 投委会纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §2.1 Sensor 双入口 · §2.2 DRI 三落点 · ① 接 Sensor</td></tr>
+            <tr><td>STAGE 0 公司会议纪要 · DRI 接 Sensor ①a</td><td>组织飞轮 §2.1 Sensor 双入口 · §2.2 DRI 三落点 · ① 接 Sensor</td></tr>
             <tr><td>STAGE 1 DRI 接任务 · 查 skill 版本</td><td>Policy 层 · skill 版本绑定（CH01 §1.2）</td></tr>
             <tr><td>STAGE 2 v3 第一次产出</td><td>Tool 层 · agent 调用确定性 API（CH01 §1.3）</td></tr>
             <tr><td>STAGE 3 DRI ② 下达修改指令</td><td>Sensor ①b 修正信号入口 · §2.2 DRI 三落点 · ② 下指令</td></tr>
@@ -3324,7 +3324,7 @@
   var fwDetail = document.getElementById('fwDetail');
   if(fwWrap && fwDetail){
     var STAGE_DATA = {
-      'N1': { tone:'sensor', stage:'STAGE 0 · SENSOR ①a', title:'投委会纪要 · 点名 DRI', dri:'DRI 落点 ① · 接 Sensor', body:'公司 context 把"该研究 SpaceX"这件事变成结构化任务，并在纪要里点名某位 DRI 接住。这一格是 Sensor，但它真正的钩子是「写下名字」—— 任务从空气里落到一个具体的人身上。', kase:'2026-05-12 投委会纪要：「下周看 SpaceX S-1，DRI = Yuan」。Yuan 在 ai_brain Inbox 里看到这一行，五层循环开始。' },
+      'N1': { tone:'sensor', stage:'STAGE 0 · SENSOR ①a', title:'公司会议纪要 · 点名 DRI', dri:'DRI 落点 ① · 接 Sensor', body:'公司 context 把"该研究 SpaceX"这件事变成结构化任务，并在纪要里点名某位 DRI 接住。这一格是 Sensor，但它真正的钩子是「写下名字」—— 任务从空气里落到一个具体的人身上。', kase:'2026-05-12 公司会议纪要：「下周看 SpaceX S-1，DRI = Yuan」。Yuan 在 ai_brain Inbox 里看到这一行，五层循环开始。' },
       'N2': { tone:'ink', stage:'STAGE 1 · SKILL EXECUTION', title:'DRI 跑一次 SpaceX 调研', dri:'', body:'DRI 调出当前版本的 skill（v3），按现有 instructions 跑一遍调研。Tool 层完成 80%，剩下的 20% 是品味与判断 —— 这正是下一步 Sensor ①b 的捕捉对象。', kase:'skill v3 产出 spacex_s1_v3.md：财务表、客户集中度、风险章节齐全，但开篇没有把"猎鹰 9 复用次数"这个数字提到首屏。' },
       'N3': { tone:'sensor', stage:'STAGE 3 · SENSOR ①b', title:'DRI 一句修改指令', dri:'DRI 落点 ② · 下指令', body:'DRI 不动手改文档，而是说一句结构化的话：「卫星互联网公司，开篇把发射成本曲线放在首屏」。这一句话不是改这一份调研 —— 是改下一万份同类调研。', kase:'Yuan 把这句话扔进 instructions 表 row 47，类型 = directive，scope = "satellite-internet"，confidence = 0.6。' },
       'N4': { tone:'ctx', stage:'STAGE 4 · CONTEXT WRITE', title:'instructions 表多一行', dri:'', body:'指令进入公司 context 的结构化存储，立即对当前任务生效；同时它也对未来所有同类任务生效 —— 这是从「一次性使用」到「常驻判断」的物理转折。', kase:'instructions 表新增一行 row 47；同一秒，spacex_s1_v3 的下一份 diff 已经把发射成本曲线推到了 line 1。' },
